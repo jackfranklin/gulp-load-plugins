@@ -59,6 +59,9 @@ Credit largely goes to @sindresorhus for his [load-grunt-tasks](https://github.c
 
 ## Changelog
 
+#####0.0.4
+- fixed keyword typo so plugin appears in search for gulp plugins
+
 #####0.0.3
 - removed accidental console.log I'd left in
 
