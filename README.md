@@ -26,6 +26,12 @@ var gulpLoadTasks = require("gulp-load-tasks");
 gulpLoadTasks(this);
 ```
 
+You could even shorten that further:
+
+```js
+require("gulp-load-tasks")(this)
+```
+
 Will result in the following happening:
 
 ```js
