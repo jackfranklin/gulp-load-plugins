@@ -11,9 +11,11 @@ $ npm install --save-dev gulp-load-tasks
 Given a `package.json` file that has some dependencies within:
 
 ```json
-"dependencies": {
-    "gulp-jshint": "*",
-    "gulp-concat": "*"
+{
+    "dependencies": {
+        "gulp-jshint": "*",
+        "gulp-concat": "*"
+    }
 }
 ```
 
