@@ -1,6 +1,6 @@
 {
   "name": "gulp-load-tasks",
-  "version": "0.0.2",
+  "version": "0.0.3",
   "description": "Automatically load any gulp plugins in your package.json",
   "main": "index.js",
   "scripts": {

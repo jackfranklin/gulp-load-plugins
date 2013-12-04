@@ -21,7 +21,6 @@ module.exports = function(context, options) {
   }, []);
 
   pattern.push("!gulp-load-tasks");
-  console.log(globule.match(pattern, names));
 
   globule.match(pattern, names).forEach(function(name) {
     var requireName = name.replace("gulp-", "");
