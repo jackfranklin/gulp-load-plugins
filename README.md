@@ -43,13 +43,14 @@ This frees you up from having to manually require each gulp plugin.
 
 ## Options
 
-You can pass in a second argument, an object of options:
+You can pass in a second argument, an object of options (the shown options are the defaults):
 
 ```js
 gulpLoadTasks(this, {
     pattern: "gulp-*", // the glob to search for
     config: "package.json", // where to find the plugins
-    scope: ["dependencies", "devDependencies", "peerDependencies"] // which keys in the config to look within
+    scope: ["dependencies", "devDependencies", "peerDependencies"], // which keys in the config to look within
+    replaceString: "gulp-" // what to remove from the name of the module when adding it to the context
 });
 ```
 
@@ -58,6 +59,9 @@ gulpLoadTasks(this, {
 Credit largely goes to @sindresorhus for his [load-grunt-tasks](https://github.com/sindresorhus/load-grunt-tasks) plugin. This plugin is almost identical, just tweaked slightly to work with Gulp and to expose the required plugins.
 
 ## Changelog
+
+#####0.0.5
+- added `replaceString` option to configure exactly what gets replace when the plugin adds the module to the context
 
 #####0.0.4
 - fixed keyword typo so plugin appears in search for gulp plugins
