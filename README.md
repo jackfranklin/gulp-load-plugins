@@ -11,9 +11,11 @@ $ npm install --save-dev gulp-load-tasks
 Given a `package.json` file that has some dependencies within:
 
 ```json
-"dependencies": {
-    "gulp-jshint": "*",
-    "gulp-concat": "*"
+{
+    "dependencies": {
+        "gulp-jshint": "*",
+        "gulp-concat": "*"
+    }
 }
 ```
 
@@ -29,7 +31,7 @@ gulpLoadTasks(this);
 You could even shorten that further:
 
 ```js
-require("gulp-load-tasks")(this)
+require("gulp-load-tasks")(this);
 ```
 
 Will result in the following happening:
@@ -38,6 +40,8 @@ Will result in the following happening:
 this.jshint = require("gulp-jshint");
 this.concat = require("gulp-concat");
 ```
+
+You can then use the plugins just like you would if you'd manually required them.
 
 This frees you up from having to manually require each gulp plugin.
 
