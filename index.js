@@ -11,6 +11,7 @@ module.exports = function(context, options) {
   var pattern = arrayify(options.pattern || ['gulp-*']);
   var config = options.config || findup('package.json');
   var scope = arrayify(options.scope || ['dependencies', 'devDependencies', 'peerDependencies']);
+  var replaceString = options.replaceString || "gulp-";
 
   if (typeof config === 'string') {
     config = require(config);
@@ -23,7 +24,7 @@ module.exports = function(context, options) {
   pattern.push("!gulp-load-tasks");
 
   globule.match(pattern, names).forEach(function(name) {
-    var requireName = name.replace("gulp-", "");
+    var requireName = name.replace(replaceString, "");
     context[requireName] = require(name);
   });
 
