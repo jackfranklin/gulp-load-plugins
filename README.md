@@ -1,6 +1,8 @@
 #gulp-load-tasks
 
-Loads in any gulp plugins and attaches them to the global scope.
+Loads in any gulp plugins and attaches them to the global scope, or an object of your choice.
+
+[![Build Status](https://travis-ci.org/jackfranklin/gulp-load-tasks.png)](https://travis-ci.org/jackfranklin/gulp-load-tasks)
 
 ## Usage
 
