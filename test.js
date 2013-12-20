@@ -11,8 +11,7 @@ require = function(x) { return "x"; };
 
 describe("loading plugins", function() {
   it("loads things in", function() {
-    var x = {};
-    gulpLoadTasks(x, {
+    var x = gulpLoadTasks({
       config: {
         dependencies: {
           "gulp-foo": "1.0.0",
@@ -30,8 +29,7 @@ describe("loading plugins", function() {
   });
 
   it("can take a pattern override", function() {
-    var x = {};
-    gulpLoadTasks(x, {
+    var x = gulpLoadTasks({
       pattern: "jack-*",
       replaceString: "jack-",
       config: {

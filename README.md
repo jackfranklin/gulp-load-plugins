@@ -26,14 +26,13 @@ Adding this into your `Gulpfile.js`:
 ```js
 var gulp = require("gulp");
 var gulpLoadTasks = require("gulp-load-tasks");
-var tasks = {};
-gulpLoadTasks(tasks);
+var tasks = gulpLoadTasks();
 ```
 
-You could even shorten that further:
+Or, even shorter:
 
 ```js
-require("gulp-load-tasks")(tasks);
+var tasks = require("gulp-load-tasks")();
 ```
 
 Will result in the following happening:
@@ -49,10 +48,10 @@ This frees you up from having to manually require each gulp plugin.
 
 ## Options
 
-You can pass in a second argument, an object of options (the shown options are the defaults):
+You can pass in an argument, an object of options (the shown options are the defaults):
 
 ```js
-gulpLoadTasks(tasks, {
+gulpLoadTasks({
     pattern: "gulp-*", // the glob to search for
     config: "package.json", // where to find the plugins
     scope: ["dependencies", "devDependencies", "peerDependencies"], // which keys in the config to look within
@@ -65,6 +64,9 @@ gulpLoadTasks(tasks, {
 Credit largely goes to @sindresorhus for his [load-grunt-tasks](https://github.com/sindresorhus/load-grunt-tasks) plugin. This plugin is almost identical, just tweaked slightly to work with Gulp and to expose the required plugins.
 
 ## Changelog
+
+#####0.1.0
+- move to `gulpLoadTasks` returning an object with the tasks define.
 
 #####0.0.5
 - added `replaceString` option to configure exactly what gets replace when the plugin adds the module to the context

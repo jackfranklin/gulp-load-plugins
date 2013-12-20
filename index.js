@@ -5,7 +5,8 @@ function arrayify(el) {
   return Array.isArray(el) ? el : [el];
 }
 
-module.exports = function(context, options) {
+module.exports = function(options) {
+  var finalObject = {};
   options = options || {};
 
   var pattern = arrayify(options.pattern || ['gulp-*']);
@@ -25,7 +26,9 @@ module.exports = function(context, options) {
 
   globule.match(pattern, names).forEach(function(name) {
     var requireName = name.replace(replaceString, "");
-    context[requireName] = require(name);
+    finalObject[requireName] = require(name);
   });
+
+  return finalObject;
 
 };
