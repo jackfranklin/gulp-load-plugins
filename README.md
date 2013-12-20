@@ -26,24 +26,24 @@ Adding this into your `Gulpfile.js`:
 ```js
 var gulp = require("gulp");
 var gulpLoadTasks = require("gulp-load-tasks");
-
-gulpLoadTasks(this);
+var tasks = {};
+gulpLoadTasks(tasks);
 ```
 
 You could even shorten that further:
 
 ```js
-require("gulp-load-tasks")(this);
+require("gulp-load-tasks")(tasks);
 ```
 
 Will result in the following happening:
 
 ```js
-this.jshint = require("gulp-jshint");
-this.concat = require("gulp-concat");
+tasks.jshint = require("gulp-jshint");
+tasks.concat = require("gulp-concat");
 ```
 
-You can then use the plugins just like you would if you'd manually required them.
+You can then use the plugins just like you would if you'd manually required them, but referring to them as `tasks.name()`, rather than just `name()`.
 
 This frees you up from having to manually require each gulp plugin.
 
@@ -52,7 +52,7 @@ This frees you up from having to manually require each gulp plugin.
 You can pass in a second argument, an object of options (the shown options are the defaults):
 
 ```js
-gulpLoadTasks(this, {
+gulpLoadTasks(tasks, {
     pattern: "gulp-*", // the glob to search for
     config: "package.json", // where to find the plugins
     scope: ["dependencies", "devDependencies", "peerDependencies"], // which keys in the config to look within
