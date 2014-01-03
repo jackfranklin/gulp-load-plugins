@@ -6,6 +6,10 @@
   "scripts": {
     "test": "mocha test.js"
   },
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/jackfranklin/gulp-load-tasks.git"
+  },
   "keywords": [
     "gulpplugin",
     "gulp"
