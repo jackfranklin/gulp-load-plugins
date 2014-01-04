@@ -65,6 +65,9 @@ Credit largely goes to @sindresorhus for his [load-grunt-tasks](https://github.c
 
 ## Changelog
 
+#####0.1.1
+- add link to this repository into `package.json` (thanks @ben-eb).
+
 #####0.1.0
 - move to `gulpLoadTasks` returning an object with the tasks define.
 
