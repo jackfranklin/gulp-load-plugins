@@ -29,7 +29,7 @@ module.exports = function(options) {
     return result.concat(Object.keys(config[prop] || {}));
   }, []);
 
-  pattern.push("!gulp-load-tasks");
+  pattern.push("!gulp-load-plugins");
 
   globule.match(pattern, names).forEach(function(name) {
     var requireName = name.replace(replaceString, "");

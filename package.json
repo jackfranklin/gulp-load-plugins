@@ -1,6 +1,6 @@
 {
-  "name": "gulp-load-tasks",
-  "version": "0.1.1",
+  "name": "gulp-load-plugins",
+  "version": "0.2.0",
   "description": "Automatically load any gulp plugins in your package.json",
   "main": "index.js",
   "scripts": {
@@ -8,13 +8,18 @@
   },
   "repository": {
     "type": "git",
-    "url": "git://github.com/jackfranklin/gulp-load-tasks.git"
+    "url": "git://github.com/jackfranklin/gulp-load-plugins.git"
   },
   "keywords": [
-    "gulpplugin",
+    "gulpfriendly",
     "gulp"
   ],
   "author": "Jack Franklin",
+  "contributors": [
+    { "name": "Pascal Hartig" },
+    { "name": "Ben Briggs" },
+    { "name": "kombucha" }
+  ],
   "license": "MIT",
   "dependencies": {
     "findup-sync": "~0.1.2",

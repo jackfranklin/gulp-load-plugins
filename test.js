@@ -1,7 +1,7 @@
 var mocha = require("mocha");
 var assert = require("assert");
 var proxyquire = require("proxyquire").noCallThru();
-var gulpLoadTasks = proxyquire("./index.js", {
+var gulpLoadPlugins = proxyquire("./index.js", {
   "gulp-foo": { name: "foo" },
   "gulp-bar": { name: "bar" },
   "gulp-foo-bar": { name: "foo-bar" },
@@ -12,7 +12,7 @@ require = function(x) { return "x"; };
 
 describe("loading plugins", function() {
   it("loads things in", function() {
-    var x = gulpLoadTasks({
+    var x = gulpLoadPlugins({
       config: {
         dependencies: {
           "gulp-foo": "1.0.0",
@@ -30,7 +30,7 @@ describe("loading plugins", function() {
   });
 
   it("can take a pattern override", function() {
-    var x = gulpLoadTasks({
+    var x = gulpLoadPlugins({
       pattern: "jack-*",
       replaceString: "jack-",
       config: {
@@ -47,7 +47,7 @@ describe("loading plugins", function() {
   });
 
   it("camelizes plugins name", function () {
-    var x = gulpLoadTasks({
+    var x = gulpLoadPlugins({
       camelize: true,
       config: {
         dependencies: {

@@ -1,13 +1,15 @@
-#gulp-load-tasks
+#gulp-load-plugins
+
+Formally known as `gulp-load-plugins`, but renamed to be clearer.
 
 Loads in any gulp plugins and attaches them to the global scope, or an object of your choice.
 
-[![Build Status](https://travis-ci.org/jackfranklin/gulp-load-tasks.png)](https://travis-ci.org/jackfranklin/gulp-load-tasks)
+[![Build Status](https://travis-ci.org/jackfranklin/gulp-load-plugins.png)](https://travis-ci.org/jackfranklin/gulp-load-plugins)
 
 ## Usage
 
 ```
-$ npm install --save-dev gulp-load-tasks
+$ npm install --save-dev gulp-load-plugins
 ```
 
 Given a `package.json` file that has some dependencies within:
@@ -25,24 +27,24 @@ Adding this into your `Gulpfile.js`:
 
 ```js
 var gulp = require("gulp");
-var gulpLoadTasks = require("gulp-load-tasks");
-var tasks = gulpLoadTasks();
+var gulpLoadPlugins = require("gulp-load-plugins");
+var plugins = gulpLoadPlugins();
 ```
 
 Or, even shorter:
 
 ```js
-var tasks = require("gulp-load-tasks")();
+var plugins = require("gulp-load-plugins")();
 ```
 
 Will result in the following happening:
 
 ```js
-tasks.jshint = require("gulp-jshint");
-tasks.concat = require("gulp-concat");
+plugins.jshint = require("gulp-jshint");
+plugins.concat = require("gulp-concat");
 ```
 
-You can then use the plugins just like you would if you'd manually required them, but referring to them as `tasks.name()`, rather than just `name()`.
+You can then use the plugins just like you would if you'd manually required them, but referring to them as `plugins.name()`, rather than just `name()`.
 
 This frees you up from having to manually require each gulp plugin.
 
@@ -51,7 +53,7 @@ This frees you up from having to manually require each gulp plugin.
 You can pass in an argument, an object of options (the shown options are the defaults):
 
 ```js
-gulpLoadTasks({
+gulpLoadPlugins({
     pattern: "gulp-*", // the glob to search for
     config: "package.json", // where to find the plugins
     scope: ["dependencies", "devDependencies", "peerDependencies"], // which keys in the config to look within
@@ -62,15 +64,19 @@ gulpLoadTasks({
 
 ## Credit
 
-Credit largely goes to @sindresorhus for his [load-grunt-tasks](https://github.com/sindresorhus/load-grunt-tasks) plugin. This plugin is almost identical, just tweaked slightly to work with Gulp and to expose the required plugins.
+Credit largely goes to @sindresorhus for his [load-grunt-plugins](https://github.com/sindresorhus/load-grunt-tasks) plugin. This plugin is almost identical, just tweaked slightly to work with Gulp and to expose the required plugins.
 
 ## Changelog
+
+#####0.2.0
+- added `camelize` option, thanks @kombucha.
+- renamed to `gulp-load-plugins`.
 
 #####0.1.1
 - add link to this repository into `package.json` (thanks @ben-eb).
 
 #####0.1.0
-- move to `gulpLoadTasks` returning an object with the tasks define.
+- move to `gulpLoadplugins` returning an object with the tasks define.
 
 #####0.0.5
 - added `replaceString` option to configure exactly what gets replace when the plugin adds the module to the context
