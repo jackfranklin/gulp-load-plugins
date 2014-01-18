@@ -1,6 +1,6 @@
 #gulp-load-plugins
 
-Formally known as `gulp-load-plugins`, but renamed to be clearer.
+Formally known as `gulp-load-tasks`, but renamed to be clearer.
 
 Loads in any gulp plugins and attaches them to the global scope, or an object of your choice.
 
