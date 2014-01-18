@@ -4,6 +4,7 @@ var proxyquire = require("proxyquire").noCallThru();
 var gulpLoadTasks = proxyquire("./index.js", {
   "gulp-foo": { name: "foo" },
   "gulp-bar": { name: "bar" },
+  "gulp-foo-bar": { name: "foo-bar" },
   "jack-foo": { name: "jack-foo" },
 });
 
@@ -44,4 +45,19 @@ describe("loading plugins", function() {
     });
     assert(!x.bar);
   });
+
+  it("camelizes plugins name", function () {
+    var x = gulpLoadTasks({
+      camelize: true,
+      config: {
+        dependencies: {
+          "gulp-foo-bar": "*"
+        }
+      }
+    });
+
+    assert.deepEqual(x.fooBar, {
+      name: "foo-bar"
+    });
+  })
 });
