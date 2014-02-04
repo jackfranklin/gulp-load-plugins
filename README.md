@@ -58,7 +58,7 @@ gulpLoadPlugins({
     config: "package.json", // where to find the plugins
     scope: ["dependencies", "devDependencies", "peerDependencies"], // which keys in the config to look within
     replaceString: "gulp-", // what to remove from the name of the module when adding it to the context
-    camelize: false // if true, transforms hyphenated plugins names to camel case
+    camelize: true // if true, transforms hyphenated plugins names to camel case
 });
 ```
 
@@ -67,6 +67,9 @@ gulpLoadPlugins({
 Credit largely goes to @sindresorhus for his [load-grunt-plugins](https://github.com/sindresorhus/load-grunt-tasks) plugin. This plugin is almost identical, just tweaked slightly to work with Gulp and to expose the required plugins.
 
 ## Changelog
+
+#####0.3.0
+- turn the `camelize` option on by default
 
 #####0.2.0
 - added `camelize` option, thanks @kombucha.
