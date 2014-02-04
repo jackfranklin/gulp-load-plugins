@@ -46,9 +46,23 @@ describe("loading plugins", function() {
     assert(!x.bar);
   });
 
-  it("camelizes plugins name", function () {
+  it("allows camelizing to be turned off", function() {
     var x = gulpLoadPlugins({
-      camelize: true,
+      camelize: false,
+      config: {
+        dependencies: {
+          "gulp-foo-bar": "*"
+        }
+      }
+    });
+
+    assert.deepEqual(x["foo-bar"], {
+      name: "foo-bar"
+    });
+  });
+
+  it("camelizes plugins name by default", function () {
+    var x = gulpLoadPlugins({
       config: {
         dependencies: {
           "gulp-foo-bar": "*"

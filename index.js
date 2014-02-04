@@ -3,13 +3,13 @@ var findup = require('findup-sync');
 
 function arrayify(el) {
   return Array.isArray(el) ? el : [el];
-}
+};
 
-function camelize(pluginName) {
-  return pluginName.split('-').reduce(function (previous, current) {
-    return previous ? (previous + current.charAt(0).toUpperCase() + current.substr(1)) : current;
-  }, '');
-}
+function camelize(str) {
+  return str.replace(/-(\w)/g, function(m, p1) {
+    return p1.toUpperCase();
+  })
+};
 
 module.exports = function(options) {
   var finalObject = {};
@@ -19,7 +19,7 @@ module.exports = function(options) {
   var config = options.config || findup('package.json');
   var scope = arrayify(options.scope || ['dependencies', 'devDependencies', 'peerDependencies']);
   var replaceString = options.replaceString || "gulp-";
-  var camelizePluginName = !!options.camelize;
+  var camelizePluginName = options.camelize === false ? false : true;
 
   if (typeof config === 'string') {
     config = require(config);
