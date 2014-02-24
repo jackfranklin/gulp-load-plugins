@@ -20,7 +20,7 @@ module.exports = function(options) {
   var scope = arrayify(options.scope || ['dependencies', 'devDependencies', 'peerDependencies']);
   var replaceString = options.replaceString || "gulp-";
   var camelizePluginName = options.camelize === false ? false : true;
-  var lazy = !!options.lazy; // Disable per default.
+  var lazy = 'lazy' in options ? !!options.lazy : true;
 
   if (typeof config === 'string') {
     config = require(config);
