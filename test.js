@@ -1,30 +1,4 @@
-/* global require:true */
-/* jshint strict:false */
-
 var assert = require("assert");
-
-//--------------------------------------------------------------------
-
-// Similar to http://underscorejs.org/#extend
-var extend = (function () {
-  var hasOwn = Object.prototype.hasOwnProperty;
-  hasOwn = hasOwn.call.bind(hasOwn);
-
-  return function (dest, source) {
-    var i, n, property;
-
-    for (i = 1, n = arguments.length; i < n; ++i) {
-      source = arguments[i];
-      for (property in source) {
-        if (hasOwn(source, property)) {
-          dest[property] = source[property];
-        }
-      }
-    }
-
-    return dest;
-  };
-})();
 
 //====================================================================
 
@@ -52,19 +26,18 @@ var gulpLoadPlugins = (function () {
 
 //====================================================================
 
-// Contains common tests.
-//
-// Only the configuration
-var commonTests = function (options) {
+// Contains common tests with and without lazy mode.
+var commonTests = function (lazy) {
   it("loads things in", function() {
-    var x = gulpLoadPlugins(extend({
+    var x = gulpLoadPlugins({
+      lazy: lazy,
       config: {
         dependencies: {
           "gulp-foo": "1.0.0",
           "gulp-bar": "*"
         }
       }
-    }, options));
+    });
 
     assert.deepEqual(x.foo(), {
       name: "foo"
@@ -75,7 +48,8 @@ var commonTests = function (options) {
   });
 
   it("can take a pattern override", function() {
-    var x = gulpLoadPlugins(extend({
+    var x = gulpLoadPlugins({
+      lazy: lazy,
       pattern: "jack-*",
       replaceString: "jack-",
       config: {
@@ -84,7 +58,7 @@ var commonTests = function (options) {
           "gulp-bar": "*"
         }
       }
-    }, options));
+    });
 
     assert.deepEqual(x.foo(), {
       name: "jack-foo"
@@ -93,14 +67,15 @@ var commonTests = function (options) {
   });
 
   it("allows camelizing to be turned off", function() {
-    var x = gulpLoadPlugins(extend({
+    var x = gulpLoadPlugins({
+      lazy: lazy,
       camelize: false,
       config: {
         dependencies: {
           "gulp-foo-bar": "*"
         }
       }
-    }, options));
+    });
 
     assert.deepEqual(x["foo-bar"](), {
       name: "foo-bar"
@@ -108,13 +83,14 @@ var commonTests = function (options) {
   });
 
   it("camelizes plugins name by default", function () {
-    var x = gulpLoadPlugins(extend({
+    var x = gulpLoadPlugins({
+      lazy: lazy,
       config: {
         dependencies: {
           "gulp-foo-bar": "*"
         }
       }
-    }, options));
+    });
 
     assert.deepEqual(x.fooBar(), {
       name: "foo-bar"
@@ -126,15 +102,11 @@ var commonTests = function (options) {
 
 describe("loading plugins", function() {
   describe("greedily", function () {
-    commonTests({
-      lazy: false,
-    });
+    commonTests(false);
   });
 
   describe("lazily", function () {
-    commonTests({
-      lazy: true,
-    });
+    commonTests(true);
 
     it('should not require plugin before use', function () {
       var $ = gulpLoadPlugins({
