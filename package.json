@@ -18,7 +18,8 @@
   "contributors": [
     { "name": "Pascal Hartig" },
     { "name": "Ben Briggs" },
-    { "name": "kombucha" }
+    { "name": "kombucha" },
+    "Julien Fontanet <julien.fontanet@vates.fr>"
   ],
   "license": "MIT",
   "dependencies": {

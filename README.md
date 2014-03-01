@@ -58,9 +58,14 @@ gulpLoadPlugins({
     config: "package.json", // where to find the plugins
     scope: ["dependencies", "devDependencies", "peerDependencies"], // which keys in the config to look within
     replaceString: "gulp-", // what to remove from the name of the module when adding it to the context
-    camelize: true // if true, transforms hyphenated plugins names to camel case
+    camelize: true, // if true, transforms hyphenated plugins names to camel case
+    lazy: true, // whether the plugins should be loaded on demand
 });
 ```
+
+**Note:** `lazy` only works with plugins which export a single function,
+almost all do, but if you encounter any problems, try switching it
+off.
 
 ## Credit
 
