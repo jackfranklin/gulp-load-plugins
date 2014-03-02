@@ -59,19 +59,20 @@ gulpLoadPlugins({
     scope: ["dependencies", "devDependencies", "peerDependencies"], // which keys in the config to look within
     replaceString: "gulp-", // what to remove from the name of the module when adding it to the context
     camelize: true, // if true, transforms hyphenated plugins names to camel case
-    lazy: true, // whether the plugins should be loaded on demand
+    lazy: true, // whether the plugins should be lazy loaded on demand
 });
 ```
 
-**Note:** `lazy` only works with plugins which export a single function,
-almost all do, but if you encounter any problems, try switching it
-off.
+**Note:** `lazy` only works with plugins which export a single function, almost all do, but if you encounter any problems, try switching it off.
 
 ## Credit
 
 Credit largely goes to @sindresorhus for his [load-grunt-plugins](https://github.com/sindresorhus/load-grunt-tasks) plugin. This plugin is almost identical, just tweaked slightly to work with Gulp and to expose the required plugins.
 
 ## Changelog
+
+#####0.4.0
+- plugins are lazy loaded for performance benefit. Thanks @julien-f for this.
 
 #####0.3.0
 - turn the `camelize` option on by default
