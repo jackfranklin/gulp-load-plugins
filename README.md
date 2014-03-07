@@ -37,7 +37,7 @@ Or, even shorter:
 var plugins = require("gulp-load-plugins")();
 ```
 
-Will result in the following happening:
+Will result in the following happening (roughly, plugins are lazy loaded but in practice you won't notice any difference):
 
 ```js
 plugins.jshint = require("gulp-jshint");
@@ -63,7 +63,17 @@ gulpLoadPlugins({
 });
 ```
 
-**Note:** `lazy` only works with plugins which export a single function, almost all do, but if you encounter any problems, try switching it off.
+
+## Lazy Loading
+
+`Lazy loading only works with plugins which export a single function. This is the common behaviour of the vast majority of Gulp plugins.
+
+If you encounter any problems with a particular plugin (for example, the `gulp-connect` plugin is one that doesn't fit the pattern), the suggested approach is to manually load that plugin:
+
+```js
+var plugins = require("gulp-load-plugins")();
+plugins.connect = require("gulp-connect");
+```
 
 ## Credit
 
