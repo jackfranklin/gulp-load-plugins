@@ -21,6 +21,10 @@ var gulpLoadPlugins = (function () {
     "gulp-foo-bar": wrapInFunc({ name: "foo-bar" }),
     "gulp-spy": spyPlugin,
     "jack-foo": wrapInFunc({ name: "jack-foo" }),
+    "gulp-insert": {
+      'append':  wrapInFunc({ name: "insert.append" }),
+      'wrap':   wrapInFunc({ name: "insert.wrap" })
+    }
   });
 })();
 
@@ -34,7 +38,8 @@ var commonTests = function (lazy) {
       config: {
         dependencies: {
           "gulp-foo": "1.0.0",
-          "gulp-bar": "*"
+          "gulp-bar": "*",
+          "gulp-insert": "*"
         }
       }
     });
@@ -44,6 +49,12 @@ var commonTests = function (lazy) {
     });
     assert.deepEqual(x.bar(), {
       name: "bar"
+    });
+    assert.deepEqual(x.insert.wrap(), {
+      name: "insert.wrap"
+    });
+    assert.deepEqual(x.insert.append(), {
+      name: "insert.append"
     });
   });
 
@@ -108,20 +119,6 @@ describe("loading plugins", function() {
   describe("lazily", function () {
     commonTests(true);
 
-    it('should not require plugin before use', function () {
-      var $ = gulpLoadPlugins({
-        lazy: true,
-        config: {
-          dependencies: {
-            "gulp-spy": "*"
-          }
-        }
-      });
-
-      // The current value is not the plugin.
-      assert.notEqual($.spy, spyPlugin);
-    });
-
     it('should proxy context and arguments', function () {
       var $ = gulpLoadPlugins({
         lazy: true,
@@ -141,22 +138,6 @@ describe("loading plugins", function() {
       assert.equal(context, result[0]);
       assert.equal(arg1, result[1]);
       assert.equal(arg2, result[2]);
-    });
-
-    it('once called, the plugin should be directly available', function () {
-      var $ = gulpLoadPlugins({
-        lazy: true,
-        config: {
-          dependencies: {
-            "gulp-spy": "*"
-          }
-        }
-      });
-
-      $.spy();
-
-      // Now it is the plugin.
-      assert.equal($.spy, spyPlugin);
     });
   });
 });

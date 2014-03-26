@@ -37,10 +37,14 @@ module.exports = function(options) {
     requireName = camelizePluginName ? camelize(requireName) : requireName;
 
     if (lazy) {
-      finalObject[requireName] = function () {
-        var fn = finalObject[requireName] = require(name);
-        return fn.apply(this, arguments);
-      };
+      Object.defineProperty(finalObject, requireName, {
+        get: (function(theModule) {
+          return function() {
+            theModule = theModule || require(name)
+            return theModule;
+          }
+        })()
+      });
     } else {
       finalObject[requireName] = require(name);
     }
