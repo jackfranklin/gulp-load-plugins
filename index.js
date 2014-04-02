@@ -20,7 +20,7 @@ module.exports = function(options) {
   var scope = arrayify(options.scope || ['dependencies', 'devDependencies', 'peerDependencies']);
   var replaceString = options.replaceString || "gulp-";
   var camelizePluginName = options.camelize === false ? false : true;
-  var lazy = 'lazy' in options ? !!options.lazy : true;
+  var lazy = 'lazy' in options ? options.lazy : true;
 
   if (typeof config === 'string') {
     config = require(config);
@@ -35,8 +35,9 @@ module.exports = function(options) {
   globule.match(pattern, names).forEach(function(name) {
     var requireName = name.replace(replaceString, "");
     requireName = camelizePluginName ? camelize(requireName) : requireName;
-
-    if (lazy) {
+    if(Array.isArray(lazy) && lazy.indexOf(requireName) !== -1){
+      finalObject[requireName] = require(name);
+    }else if (!!lazy) {
       finalObject[requireName] = function () {
         var fn = finalObject[requireName] = require(name);
         return fn.apply(this, arguments);
