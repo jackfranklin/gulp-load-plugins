@@ -1,4 +1,5 @@
 var assert = require("assert");
+var sinon = require('sinon');
 
 //====================================================================
 
@@ -106,9 +107,58 @@ var commonTests = function (lazy) {
 
 describe('no lazy loading', function() {
   commonTests(false);
+
+  var x, spy;
+  before(function() {
+    spy = sinon.spy();
+    x = gulpLoadPlugins({
+      lazy: false,
+      config: {
+        dependencies: {
+          "gulp-insert": "*"
+        }
+      },
+      requireFn: function() {
+        spy();
+        return function() {};
+      }
+    });
+  });
+
+  it('does require at first', function() {
+    assert(spy.called);
+  });
+
 });
 
 describe('with lazy loading', function() {
   commonTests(true);
+
+  var x, spy;
+  before(function() {
+    spy = sinon.spy();
+    x = gulpLoadPlugins({
+      lazy: true,
+      config: {
+        dependencies: {
+          "gulp-insert": "*"
+        }
+      },
+      requireFn: function() {
+        spy();
+        return function() {};
+      }
+    });
+  });
+
+  it('does not require at first', function() {
+    assert(!spy.called);
+  });
+
+  it('does when the property is accessed', function() {
+    x.insert();
+    assert(spy.called);
+  });
 });
+
 

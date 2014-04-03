@@ -34,6 +34,7 @@
   },
   "devDependencies": {
     "mocha": "~1.15.1",
-    "proxyquire": "~0.5.2"
+    "proxyquire": "~0.5.2",
+    "sinon": "^1.9.1"
   }
 }
