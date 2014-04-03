@@ -1,5 +1,7 @@
 #gulp-load-plugins
 
+[![NPM](https://nodei.co/npm/gulp-load-plugins.png?downloads=true)](https://nodei.co/npm/gulp-load-plugins/)
+
 Formally known as `gulp-load-tasks`, but renamed to be clearer.
 
 Loads in any gulp plugins and attaches them to the global scope, or an object of your choice.
