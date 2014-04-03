@@ -1,15 +1,16 @@
 var globule = require('globule');
 var findup = require('findup-sync');
 
+
 function arrayify(el) {
   return Array.isArray(el) ? el : [el];
-};
+}
 
 function camelize(str) {
   return str.replace(/-(\w)/g, function(m, p1) {
     return p1.toUpperCase();
-  })
-};
+  });
+}
 
 module.exports = function(options) {
   var finalObject = {};
@@ -21,6 +22,7 @@ module.exports = function(options) {
   var replaceString = options.replaceString || "gulp-";
   var camelizePluginName = options.camelize === false ? false : true;
   var lazy = 'lazy' in options ? !!options.lazy : true;
+  var requireFn = options.requireFn || require;
 
   if (typeof config === 'string') {
     config = require(config);
@@ -36,13 +38,14 @@ module.exports = function(options) {
     var requireName = name.replace(replaceString, "");
     requireName = camelizePluginName ? camelize(requireName) : requireName;
 
-    if (lazy) {
-      finalObject[requireName] = function () {
-        var fn = finalObject[requireName] = require(name);
-        return fn.apply(this, arguments);
-      };
+    if(lazy) {
+      Object.defineProperty(finalObject, requireName, {
+        get: function() {
+          return requireFn(name);
+        }
+      });
     } else {
-      finalObject[requireName] = require(name);
+      finalObject[requireName] = requireFn(name);
     }
   });
 

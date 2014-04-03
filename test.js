@@ -1,14 +1,11 @@
 var assert = require("assert");
+var sinon = require('sinon');
 
 //====================================================================
 
-var spyPlugin = function () {
-  return [].concat.apply([this], arguments);
-};
-
 var gulpLoadPlugins = (function () {
   var wrapInFunc = function (value) {
-    return function () {
+    return function() {
       return value;
     };
   };
@@ -19,8 +16,11 @@ var gulpLoadPlugins = (function () {
     "gulp-foo": wrapInFunc({ name: "foo" }),
     "gulp-bar": wrapInFunc({ name: "bar" }),
     "gulp-foo-bar": wrapInFunc({ name: "foo-bar" }),
-    "gulp-spy": spyPlugin,
     "jack-foo": wrapInFunc({ name: "jack-foo" }),
+    "gulp-insert": {
+      'append':  wrapInFunc({ name: "insert.append" }),
+      'wrap':   wrapInFunc({ name: "insert.wrap" })
+    }
   });
 })();
 
@@ -34,7 +34,8 @@ var commonTests = function (lazy) {
       config: {
         dependencies: {
           "gulp-foo": "1.0.0",
-          "gulp-bar": "*"
+          "gulp-bar": "*",
+          "gulp-insert": "*"
         }
       }
     });
@@ -44,6 +45,12 @@ var commonTests = function (lazy) {
     });
     assert.deepEqual(x.bar(), {
       name: "bar"
+    });
+    assert.deepEqual(x.insert.wrap(), {
+      name: "insert.wrap"
+    });
+    assert.deepEqual(x.insert.append(), {
+      name: "insert.append"
     });
   });
 
@@ -98,65 +105,60 @@ var commonTests = function (lazy) {
   });
 };
 
-//--------------------------------------------------------------------
+describe('no lazy loading', function() {
+  commonTests(false);
 
-describe("loading plugins", function() {
-  describe("greedily", function () {
-    commonTests(false);
+  var x, spy;
+  before(function() {
+    spy = sinon.spy();
+    x = gulpLoadPlugins({
+      lazy: false,
+      config: {
+        dependencies: {
+          "gulp-insert": "*"
+        }
+      },
+      requireFn: function() {
+        spy();
+        return function() {};
+      }
+    });
   });
 
-  describe("lazily", function () {
-    commonTests(true);
+  it('does require at first', function() {
+    assert(spy.called);
+  });
 
-    it('should not require plugin before use', function () {
-      var $ = gulpLoadPlugins({
-        lazy: true,
-        config: {
-          dependencies: {
-            "gulp-spy": "*"
-          }
+});
+
+describe('with lazy loading', function() {
+  commonTests(true);
+
+  var x, spy;
+  before(function() {
+    spy = sinon.spy();
+    x = gulpLoadPlugins({
+      lazy: true,
+      config: {
+        dependencies: {
+          "gulp-insert": "*"
         }
-      });
-
-      // The current value is not the plugin.
-      assert.notEqual($.spy, spyPlugin);
+      },
+      requireFn: function() {
+        spy();
+        return function() {};
+      }
     });
+  });
 
-    it('should proxy context and arguments', function () {
-      var $ = gulpLoadPlugins({
-        lazy: true,
-        config: {
-          dependencies: {
-            "gulp-spy": "*"
-          }
-        }
-      });
+  it('does not require at first', function() {
+    assert(!spy.called);
+  });
 
-      // When called, context and arguments are proxied.
-      var context = {};
-      var arg1 = {};
-      var arg2 = {};
-      var result = $.spy.call(context, arg1, arg2);
-
-      assert.equal(context, result[0]);
-      assert.equal(arg1, result[1]);
-      assert.equal(arg2, result[2]);
-    });
-
-    it('once called, the plugin should be directly available', function () {
-      var $ = gulpLoadPlugins({
-        lazy: true,
-        config: {
-          dependencies: {
-            "gulp-spy": "*"
-          }
-        }
-      });
-
-      $.spy();
-
-      // Now it is the plugin.
-      assert.equal($.spy, spyPlugin);
-    });
+  it('does when the property is accessed', function() {
+    x.insert();
+    assert(spy.called);
   });
 });
+
+

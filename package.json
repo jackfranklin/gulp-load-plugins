@@ -16,9 +16,15 @@
   ],
   "author": "Jack Franklin",
   "contributors": [
-    { "name": "Pascal Hartig" },
-    { "name": "Ben Briggs" },
-    { "name": "kombucha" },
+    {
+      "name": "Pascal Hartig"
+    },
+    {
+      "name": "Ben Briggs"
+    },
+    {
+      "name": "kombucha"
+    },
     "Julien Fontanet <julien.fontanet@vates.fr>"
   ],
   "license": "MIT",
@@ -28,6 +34,7 @@
   },
   "devDependencies": {
     "mocha": "~1.15.1",
-    "proxyquire": "~0.5.2"
+    "proxyquire": "~0.5.2",
+    "sinon": "^1.9.1"
   }
 }
