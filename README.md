@@ -66,20 +66,16 @@ gulpLoadPlugins({
 
 ## Lazy Loading
 
-`Lazy loading only works with plugins which export a single function. This is the common behaviour of the vast majority of Gulp plugins.
-
-If you encounter any problems with a particular plugin (for example, the `gulp-connect` plugin is one that doesn't fit the pattern), the suggested approach is to manually load that plugin:
-
-```js
-var plugins = require("gulp-load-plugins")();
-plugins.connect = require("gulp-connect");
-```
+In 0.4.0 and prior, lazy loading used to only work with plugins that return a function. In newer versions though, lazy loading should work for any plugin. If you have a problem related to this please try disabling lazy loading and see if that fixes it. Feel free to open an issue on this repo too.
 
 ## Credit
 
 Credit largely goes to @sindresorhus for his [load-grunt-plugins](https://github.com/sindresorhus/load-grunt-tasks) plugin. This plugin is almost identical, just tweaked slightly to work with Gulp and to expose the required plugins.
 
 ## Changelog
+
+#####0.5.0
+- improved lazy loading so it should work with plugins that don't just return a function. Thanks to @nfroidure for help with this.
 
 #####0.4.0
 - plugins are lazy loaded for performance benefit. Thanks @julien-f for this.
