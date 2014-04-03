@@ -3,13 +3,13 @@ var findup = require('findup-sync');
 
 function arrayify(el) {
   return Array.isArray(el) ? el : [el];
-};
+}
 
 function camelize(str) {
   return str.replace(/-(\w)/g, function(m, p1) {
     return p1.toUpperCase();
-  })
-};
+  });
+}
 
 module.exports = function(options) {
   var finalObject = {};
@@ -36,14 +36,11 @@ module.exports = function(options) {
     var requireName = name.replace(replaceString, "");
     requireName = camelizePluginName ? camelize(requireName) : requireName;
 
-    if (lazy) {
+    if(lazy) {
       Object.defineProperty(finalObject, requireName, {
-        get: (function(theModule) {
-          return function() {
-            theModule = theModule || require(name)
-            return theModule;
-          }
-        })()
+        get: function() {
+          return require(name);
+        }
       });
     } else {
       finalObject[requireName] = require(name);

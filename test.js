@@ -2,13 +2,9 @@ var assert = require("assert");
 
 //====================================================================
 
-var spyPlugin = function () {
-  return [].concat.apply([this], arguments);
-};
-
 var gulpLoadPlugins = (function () {
   var wrapInFunc = function (value) {
-    return function () {
+    return function() {
       return value;
     };
   };
@@ -19,7 +15,6 @@ var gulpLoadPlugins = (function () {
     "gulp-foo": wrapInFunc({ name: "foo" }),
     "gulp-bar": wrapInFunc({ name: "bar" }),
     "gulp-foo-bar": wrapInFunc({ name: "foo-bar" }),
-    "gulp-spy": spyPlugin,
     "jack-foo": wrapInFunc({ name: "jack-foo" }),
     "gulp-insert": {
       'append':  wrapInFunc({ name: "insert.append" }),
@@ -109,35 +104,11 @@ var commonTests = function (lazy) {
   });
 };
 
-//--------------------------------------------------------------------
-
-describe("loading plugins", function() {
-  describe("greedily", function () {
-    commonTests(false);
-  });
-
-  describe("lazily", function () {
-    commonTests(true);
-
-    it('should proxy context and arguments', function () {
-      var $ = gulpLoadPlugins({
-        lazy: true,
-        config: {
-          dependencies: {
-            "gulp-spy": "*"
-          }
-        }
-      });
-
-      // When called, context and arguments are proxied.
-      var context = {};
-      var arg1 = {};
-      var arg2 = {};
-      var result = $.spy.call(context, arg1, arg2);
-
-      assert.equal(context, result[0]);
-      assert.equal(arg1, result[1]);
-      assert.equal(arg2, result[2]);
-    });
-  });
+describe('no lazy loading', function() {
+  commonTests(false);
 });
+
+describe('with lazy loading', function() {
+  commonTests(true);
+});
+
