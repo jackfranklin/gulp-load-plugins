@@ -32,12 +32,12 @@
   ],
   "license": "MIT",
   "dependencies": {
-    "findup-sync": "~0.1.2",
-    "globule": "~0.1.0"
+    "findup-sync": "^0.1.2",
+    "globule": "^0.2.0"
   },
   "devDependencies": {
-    "mocha": "~1.15.1",
-    "proxyquire": "~0.5.2",
+    "mocha": "^1.18.2",
+    "proxyquire": "^0.6.0",
     "sinon": "^1.9.1"
   }
 }
