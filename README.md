@@ -76,6 +76,9 @@ Credit largely goes to @sindresorhus for his [load-grunt-plugins](https://github
 
 ## Changelog
 
+#####0.5.1
+- Updated some internal dependencies which should see some small improvements - thanks @shinnn for this contribution.
+
 #####0.5.0
 - improved lazy loading so it should work with plugins that don't just return a function. Thanks to @nfroidure for help with this.
 
