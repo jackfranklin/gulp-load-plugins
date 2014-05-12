@@ -23,6 +23,8 @@ module.exports = function(options) {
   var camelizePluginName = options.camelize === false ? false : true;
   var lazy = 'lazy' in options ? !!options.lazy : true;
   var requireFn = options.requireFn || require;
+  // parse plugin params if any
+  var pluginParams = options.pluginParams || undefined;
 
   if (typeof config === 'string') {
     config = require(config);
@@ -39,13 +41,25 @@ module.exports = function(options) {
     requireName = camelizePluginName ? camelize(requireName) : requireName;
 
     if(lazy) {
-      Object.defineProperty(finalObject, requireName, {
-        get: function() {
-          return requireFn(name);
-        }
-      });
+      if(pluginParams && pluginParams[name]) {
+        Object.defineProperty(finalObject, requireName, {
+          get: function(){
+            return requireFn(name).apply(this, pluginParams[name]);
+          }
+        });
+      } else {
+        Object.defineProperty(finalObject, requireName, {
+          get: function() {
+            return requireFn(name);
+          }
+        });
+      }
     } else {
-      finalObject[requireName] = requireFn(name);
+      if(pluginParams && pluginParams[name]) {
+        finalObject[requireName] = requireFn(name).apply(this, pluginParams[name]);
+      } else {
+        finalObject[requireName] = requireFn(name);
+      }
     }
   });
 
