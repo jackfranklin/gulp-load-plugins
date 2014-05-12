@@ -131,6 +131,38 @@ describe('no lazy loading', function() {
 
 });
 
+describe('no lazy loading with pluginParams provided', function() {
+  commonTests(false);
+
+  var x, spy;
+  before(function() {
+    spy = sinon.spy();
+    objParam1 = {};
+    objParam2 = {};
+    params = [objParam1, objParam2];
+    x = gulpLoadPlugins({
+      lazy: false,
+      config: {
+        dependencies: {
+          "gulp-insert": "*"
+        }
+      },
+      pluginParams: {
+        "gulp-insert": params
+      },
+      requireFn: function() {
+        spy(params);
+        return function(objParam1, objParam2) {};
+      }
+    });
+  });
+
+  it('does require at first with params', function() {
+    assert(spy.calledWith(params));
+  });
+
+});
+
 describe('with lazy loading', function() {
   commonTests(true);
 
@@ -160,5 +192,45 @@ describe('with lazy loading', function() {
     assert(spy.called);
   });
 });
+
+describe('lazy loading with pluginParams provided', function() {
+  commonTests(true);
+
+  var x, spy;
+  before(function() {
+    spy = sinon.spy();
+    objParam1 = {};
+    objParam2 = {};
+    params = [objParam1, objParam2];
+    x = gulpLoadPlugins({
+      lazy: true,
+      config: {
+        dependencies: {
+          "gulp-insert": "*"
+        }
+      },
+      pluginParams: {
+        "gulp-insert": params
+      },
+
+      requireFn: function() {
+        spy(params);
+        return function(objParam1, objParam2) {
+          return function(){};
+        };
+      }
+    });
+  });
+
+  it('does not require at first', function() {
+    assert(spy.notCalled);
+  });
+
+  it('does when the property is accessed with params', function() {
+    x.insert(objParam1, objParam2);
+    assert(spy.called);
+  });
+});
+
 
 
