@@ -2,17 +2,16 @@
   "name": "gulp-load-plugins",
   "version": "0.5.1",
   "description": "Automatically load any gulp plugins in your package.json",
-  "main": "index.js",
   "scripts": {
     "test": "mocha test.js"
   },
-  "repository": {
-    "type": "git",
-    "url": "git://github.com/jackfranklin/gulp-load-plugins.git"
-  },
+  "repository": "jackfranklin/gulp-load-plugins",
   "keywords": [
     "gulpfriendly",
-    "gulp"
+    "gulp",
+    "require",
+    "load",
+    "plugins"
   ],
   "author": "Jack Franklin",
   "contributors": [
@@ -37,7 +36,7 @@
   },
   "devDependencies": {
     "mocha": "^1.18.2",
-    "proxyquire": "^0.6.0",
+    "proxyquire": "^1.0.1",
     "sinon": "^1.9.1"
   }
 }

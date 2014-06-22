@@ -1,6 +1,6 @@
+'use strict';
 var globule = require('globule');
 var findup = require('findup-sync');
-
 
 function arrayify(el) {
   return Array.isArray(el) ? el : [el];
@@ -19,7 +19,7 @@ module.exports = function(options) {
   var pattern = arrayify(options.pattern || ['gulp-*']);
   var config = options.config || findup('package.json');
   var scope = arrayify(options.scope || ['dependencies', 'devDependencies', 'peerDependencies']);
-  var replaceString = options.replaceString || "gulp-";
+  var replaceString = options.replaceString || 'gulp-';
   var camelizePluginName = options.camelize === false ? false : true;
   var lazy = 'lazy' in options ? !!options.lazy : true;
   var requireFn = options.requireFn || require;
@@ -28,14 +28,14 @@ module.exports = function(options) {
     config = require(config);
   }
 
-  var names = scope.reduce(function (result, prop) {
+  var names = scope.reduce(function(result, prop) {
     return result.concat(Object.keys(config[prop] || {}));
   }, []);
 
-  pattern.push("!gulp-load-plugins");
+  pattern.push('!gulp-load-plugins');
 
   globule.match(pattern, names).forEach(function(name) {
-    var requireName = name.replace(replaceString, "");
+    var requireName = name.replace(replaceString, '');
     requireName = camelizePluginName ? camelize(requireName) : requireName;
 
     if(lazy) {
@@ -50,5 +50,4 @@ module.exports = function(options) {
   });
 
   return finalObject;
-
 };

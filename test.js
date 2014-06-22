@@ -1,25 +1,26 @@
-var assert = require("assert");
+'use strict';
+var assert = require('assert');
 var sinon = require('sinon');
 
 //====================================================================
 
-var gulpLoadPlugins = (function () {
-  var wrapInFunc = function (value) {
+var gulpLoadPlugins = (function() {
+  var wrapInFunc = function(value) {
     return function() {
       return value;
     };
   };
 
-  var proxyquire = require("proxyquire").noCallThru();
+  var proxyquire = require('proxyquire').noCallThru();
 
-  return proxyquire("./index.js", {
-    "gulp-foo": wrapInFunc({ name: "foo" }),
-    "gulp-bar": wrapInFunc({ name: "bar" }),
-    "gulp-foo-bar": wrapInFunc({ name: "foo-bar" }),
-    "jack-foo": wrapInFunc({ name: "jack-foo" }),
-    "gulp-insert": {
-      'append':  wrapInFunc({ name: "insert.append" }),
-      'wrap':   wrapInFunc({ name: "insert.wrap" })
+  return proxyquire('./', {
+    'gulp-foo': wrapInFunc({ name: 'foo' }),
+    'gulp-bar': wrapInFunc({ name: 'bar' }),
+    'gulp-foo-bar': wrapInFunc({ name: 'foo-bar' }),
+    'jack-foo': wrapInFunc({ name: 'jack-foo' }),
+    'gulp-insert': {
+      'append':  wrapInFunc({ name: 'insert.append' }),
+      'wrap':   wrapInFunc({ name: 'insert.wrap' })
     }
   });
 })();
@@ -27,80 +28,80 @@ var gulpLoadPlugins = (function () {
 //====================================================================
 
 // Contains common tests with and without lazy mode.
-var commonTests = function (lazy) {
-  it("loads things in", function() {
+var commonTests = function(lazy) {
+  it('loads things in', function() {
     var x = gulpLoadPlugins({
       lazy: lazy,
       config: {
         dependencies: {
-          "gulp-foo": "1.0.0",
-          "gulp-bar": "*",
-          "gulp-insert": "*"
+          'gulp-foo': '1.0.0',
+          'gulp-bar': '*',
+          'gulp-insert': '*'
         }
       }
     });
 
     assert.deepEqual(x.foo(), {
-      name: "foo"
+      name: 'foo'
     });
     assert.deepEqual(x.bar(), {
-      name: "bar"
+      name: 'bar'
     });
     assert.deepEqual(x.insert.wrap(), {
-      name: "insert.wrap"
+      name: 'insert.wrap'
     });
     assert.deepEqual(x.insert.append(), {
-      name: "insert.append"
+      name: 'insert.append'
     });
   });
 
-  it("can take a pattern override", function() {
+  it('can take a pattern override', function() {
     var x = gulpLoadPlugins({
       lazy: lazy,
-      pattern: "jack-*",
-      replaceString: "jack-",
+      pattern: 'jack-*',
+      replaceString: 'jack-',
       config: {
         dependencies: {
-          "jack-foo": "1.0.0",
-          "gulp-bar": "*"
+          'jack-foo': '1.0.0',
+          'gulp-bar': '*'
         }
       }
     });
 
     assert.deepEqual(x.foo(), {
-      name: "jack-foo"
+      name: 'jack-foo'
     });
     assert(!x.bar);
   });
 
-  it("allows camelizing to be turned off", function() {
+  it('allows camelizing to be turned off', function() {
     var x = gulpLoadPlugins({
       lazy: lazy,
       camelize: false,
       config: {
         dependencies: {
-          "gulp-foo-bar": "*"
+          'gulp-foo-bar': '*'
         }
       }
     });
 
-    assert.deepEqual(x["foo-bar"](), {
-      name: "foo-bar"
+    assert.deepEqual(x['foo-bar'](), {
+      name: 'foo-bar'
     });
   });
 
-  it("camelizes plugins name by default", function () {
+  it('camelizes plugins name by default', function() {
     var x = gulpLoadPlugins({
       lazy: lazy,
       config: {
         dependencies: {
-          "gulp-foo-bar": "*"
+          'gulp-foo-bar': '*'
         }
       }
     });
 
     assert.deepEqual(x.fooBar(), {
-      name: "foo-bar"
+      name: 'foo-bar'
     });
   });
 };
@@ -115,7 +116,7 @@ describe('no lazy loading', function() {
       lazy: false,
       config: {
         dependencies: {
-          "gulp-insert": "*"
+          'gulp-insert': '*'
         }
       },
       requireFn: function() {
@@ -128,7 +129,6 @@ describe('no lazy loading', function() {
   it('does require at first', function() {
     assert(spy.called);
   });
-
 });
 
 describe('with lazy loading', function() {
@@ -141,7 +141,7 @@ describe('with lazy loading', function() {
       lazy: true,
       config: {
         dependencies: {
-          "gulp-insert": "*"
+          'gulp-insert': '*'
         }
       },
       requireFn: function() {
@@ -160,5 +160,3 @@ describe('with lazy loading', function() {
     assert(spy.called);
   });
 });
-
-
