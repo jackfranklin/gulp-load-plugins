@@ -1,6 +1,6 @@
 {
   "name": "gulp-load-plugins",
-  "version": "0.5.1",
+  "version": "0.5.2",
   "description": "Automatically load any gulp plugins in your package.json",
   "scripts": {
     "test": "mocha test.js"
@@ -26,6 +26,9 @@
     },
     {
       "name": "Nicolas Froidure"
+    },
+    {
+      "name": "Sindre Sorhus"
     },
     "Julien Fontanet <julien.fontanet@vates.fr>"
   ],

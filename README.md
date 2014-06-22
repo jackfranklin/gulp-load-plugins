@@ -80,6 +80,9 @@ Credit largely goes to @sindresorhus for his [load-grunt-plugins](https://github
 
 ## Changelog
 
+##### 0.5.2
+- Swap out globule for multimatch, thanks @sindresorhus.
+
 ##### 0.5.1
 - Updated some internal dependencies which should see some small improvements - thanks @shinnn for this contribution.
 
