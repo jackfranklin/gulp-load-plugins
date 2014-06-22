@@ -32,7 +32,7 @@
   "license": "MIT",
   "dependencies": {
     "findup-sync": "^0.1.2",
-    "globule": "^0.2.0"
+    "multimatch": "^0.3.0"
   },
   "devDependencies": {
     "mocha": "^1.18.2",

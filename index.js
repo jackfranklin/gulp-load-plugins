@@ -1,5 +1,5 @@
 'use strict';
-var globule = require('globule');
+var multimatch = require('multimatch');
 var findup = require('findup-sync');
 
 function arrayify(el) {
@@ -34,7 +34,7 @@ module.exports = function(options) {
 
   pattern.push('!gulp-load-plugins');
 
-  globule.match(pattern, names).forEach(function(name) {
+  multimatch(names, pattern).forEach(function(name) {
     var requireName = name.replace(replaceString, '');
     requireName = camelizePluginName ? camelize(requireName) : requireName;
 
