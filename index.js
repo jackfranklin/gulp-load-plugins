@@ -28,6 +28,10 @@ module.exports = function(options) {
     config = require(config);
   }
 
+  if(!config) {
+    throw new Error('Could not find dependencies. Do you have a package.json file in your project?');
+  }
+
   var names = scope.reduce(function(result, prop) {
     return result.concat(Object.keys(config[prop] || {}));
   }, []);
