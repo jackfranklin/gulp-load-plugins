@@ -80,6 +80,9 @@ Credit largely goes to @sindresorhus for his [load-grunt-plugins](https://github
 
 ## Changelog
 
+##### 0.5.3
+- Show a nicer error if the plugin is unable to load any configuration and hence can't find any dependencies to load
+
 ##### 0.5.2
 - Swap out globule for multimatch, thanks @sindresorhus.
 
