@@ -21,11 +21,23 @@ var gulpLoadPlugins = (function() {
     'gulp-insert': {
       'append':  wrapInFunc({ name: 'insert.append' }),
       'wrap':   wrapInFunc({ name: 'insert.wrap' })
-    }
+    },
+    'findup-sync': function() { return null; }
   });
 })();
 
 //====================================================================
+
+describe('configuration', function() {
+  it('throws a nice error if no configuration is found', function() {
+    assert.throws(function() {
+      gulpLoadPlugins({
+        config: null
+      });
+    }, /Could not find dependencies. Do you have a package.json file in your project?/);
+  });
+});
+
 
 // Contains common tests with and without lazy mode.
 var commonTests = function(lazy) {
