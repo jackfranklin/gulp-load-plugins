@@ -38,6 +38,7 @@
     "multimatch": "^0.3.0"
   },
   "devDependencies": {
+    "jshint": "^2.5.1",
     "mocha": "^1.18.2",
     "proxyquire": "^1.0.1",
     "sinon": "^1.9.1"
