@@ -59,7 +59,7 @@ You can pass in an argument, an object of options (the shown options are the def
 ```js
 gulpLoadPlugins({
     pattern: 'gulp-*', // the glob to search for
-    config: 'package.json', // where to find the plugins
+    config: 'package.json', // where to find the plugins, by default from searched up from process.cwd() 
     scope: ['dependencies', 'devDependencies', 'peerDependencies'], // which keys in the config to look within
     replaceString: 'gulp-', // what to remove from the name of the module when adding it to the context
     camelize: true, // if true, transforms hyphenated plugins names to camel case
