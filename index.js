@@ -1,6 +1,7 @@
 'use strict';
 var multimatch = require('multimatch');
 var findup = require('findup-sync');
+var path = require('path');
 
 function arrayify(el) {
   return Array.isArray(el) ? el : [el];
@@ -17,7 +18,7 @@ module.exports = function(options) {
   options = options || {};
 
   var pattern = arrayify(options.pattern || ['gulp-*']);
-  var config = options.config || findup('package.json');
+  var config = options.config || findup('package.json', {cwd: parentDir});
   var scope = arrayify(options.scope || ['dependencies', 'devDependencies', 'peerDependencies']);
   var replaceString = options.replaceString || 'gulp-';
   var camelizePluginName = options.camelize === false ? false : true;
@@ -55,3 +56,8 @@ module.exports = function(options) {
 
   return finalObject;
 };
+
+var parentDir = path.dirname(module.parent.filename);
+  
+// Necessary to get the current `module.parent` and resolve paths correctly.
+delete require.cache[__filename];
