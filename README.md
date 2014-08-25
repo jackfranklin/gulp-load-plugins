@@ -80,6 +80,9 @@ Credit largely goes to @sindresorhus for his [load-grunt-plugins](https://github
 
 ## Changelog
 
+##### 0.6.0
+- Fix issues around plugin picking wrong package.json file - thanks @iliakan (see [issue](https://github.com/jackfranklin/gulp-load-plugins/issues/35)).
+
 ##### 0.5.3
 - Show a nicer error if the plugin is unable to load any configuration and hence can't find any dependencies to load
 
