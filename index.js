@@ -17,10 +17,10 @@ module.exports = function(options) {
   var finalObject = {};
   options = options || {};
 
-  var pattern = arrayify(options.pattern || ['gulp-*']);
+  var pattern = arrayify(options.pattern || ['gulp-*', 'gulp.*']);
   var config = options.config || findup('package.json', {cwd: parentDir});
   var scope = arrayify(options.scope || ['dependencies', 'devDependencies', 'peerDependencies']);
-  var replaceString = options.replaceString || 'gulp-';
+  var replaceString = options.replaceString || /^gulp(-|\.)/;
   var camelizePluginName = options.camelize === false ? false : true;
   var lazy = 'lazy' in options ? !!options.lazy : true;
   var requireFn = options.requireFn || require;
