@@ -22,6 +22,7 @@ var gulpLoadPlugins = (function() {
       'append':  wrapInFunc({ name: 'insert.append' }),
       'wrap':   wrapInFunc({ name: 'insert.wrap' })
     },
+    'gulp.baz': wrapInFunc({ name: 'baz' }),
     'findup-sync': function() { return null; }
   });
 })();
@@ -48,7 +49,8 @@ var commonTests = function(lazy) {
         dependencies: {
           'gulp-foo': '1.0.0',
           'gulp-bar': '*',
-          'gulp-insert': '*'
+          'gulp-insert': '*',
+          'gulp.baz': '*'
         }
       }
     });
@@ -58,6 +60,9 @@ var commonTests = function(lazy) {
     });
     assert.deepEqual(x.bar(), {
       name: 'bar'
+    });
+    assert.deepEqual(x.baz(), {
+      name: 'baz'
     });
     assert.deepEqual(x.insert.wrap(), {
       name: 'insert.wrap'
