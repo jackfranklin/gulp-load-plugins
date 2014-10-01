@@ -80,6 +80,11 @@ Credit largely goes to @sindresorhus for his [load-grunt-plugins](https://github
 
 ## Changelog
 
+##### 0.7.0
+- support loading plugins with a dot in the name, such as `gulp.spritesmith` - thanks to @MRuy
+- upgrade multimatch to 1.0.0
+
+
 ##### 0.6.0
 - Fix issues around plugin picking wrong package.json file - thanks @iliakan (see [issue](https://github.com/jackfranklin/gulp-load-plugins/issues/35)).
 
