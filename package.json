@@ -35,7 +35,7 @@
   "license": "MIT",
   "dependencies": {
     "findup-sync": "^0.1.2",
-    "multimatch": "^0.3.0"
+    "multimatch": "1.0.0"
   },
   "devDependencies": {
     "jshint": "^2.5.1",
