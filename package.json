@@ -5,6 +5,9 @@
   "scripts": {
     "test": "mocha test.js"
   },
+  "files": [
+    "index.js"
+  ],
   "repository": "jackfranklin/gulp-load-plugins",
   "keywords": [
     "gulpfriendly",
