@@ -80,6 +80,10 @@ Credit largely goes to @sindresorhus for his [load-grunt-plugins](https://github
 
 ## Changelog
 
+##### 0.7.1
+- add `files` property to package.json so only required files are downloaded when installed - thanks @shinnn
+
+
 ##### 0.7.0
 - support loading plugins with a dot in the name, such as `gulp.spritesmith` - thanks to @MRuy
 - upgrade multimatch to 1.0.0
