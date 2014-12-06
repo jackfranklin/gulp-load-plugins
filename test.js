@@ -121,6 +121,16 @@ var commonTests = function(lazy) {
       name: 'foo-bar'
     });
   });
+
+  it('lets something be completely renamed', function() {
+    var x = gulpLoadPlugins({
+      lazy: lazy,
+      config: { dependencies: { 'gulp-foo': '1.0.0' } },
+      rename: { 'gulp-foo': 'bar' }
+    });
+
+    assert.deepEqual(x.bar(), { name: 'foo' });
+  });
 };
 
 describe('no lazy loading', function() {

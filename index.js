@@ -24,6 +24,7 @@ module.exports = function(options) {
   var camelizePluginName = options.camelize === false ? false : true;
   var lazy = 'lazy' in options ? !!options.lazy : true;
   var requireFn = options.requireFn || require;
+  var renameObj = options.rename || {};
 
   if (typeof config === 'string') {
     config = require(config);
@@ -40,8 +41,14 @@ module.exports = function(options) {
   pattern.push('!gulp-load-plugins');
 
   multimatch(names, pattern).forEach(function(name) {
-    var requireName = name.replace(replaceString, '');
-    requireName = camelizePluginName ? camelize(requireName) : requireName;
+    var requireName;
+
+    if(renameObj[name]) {
+      requireName = options.rename[name];
+    } else {
+      requireName = name.replace(replaceString, '');
+      requireName = camelizePluginName ? camelize(requireName) : requireName;
+    }
 
     if(lazy) {
       Object.defineProperty(finalObject, requireName, {
@@ -58,6 +65,6 @@ module.exports = function(options) {
 };
 
 var parentDir = path.dirname(module.parent.filename);
-  
+
 // Necessary to get the current `module.parent` and resolve paths correctly.
 delete require.cache[__filename];
