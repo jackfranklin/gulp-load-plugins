@@ -64,9 +64,21 @@ gulpLoadPlugins({
     replaceString: 'gulp-', // what to remove from the name of the module when adding it to the context
     camelize: true, // if true, transforms hyphenated plugins names to camel case
     lazy: true, // whether the plugins should be lazy loaded on demand
+    rename: {} // a mapping of plugins to rename
 });
 ```
 
+## Renaming
+
+From 0.8.0, you can pass in an object of mappings for renaming plugins. For example, imagine you want to load the `gulp-ruby-sass` plugin, but want to refer to it as just `sass`:
+
+```js
+gulpLoadPlugins({
+  rename: {
+    'gulp-ruby-sass': 'sass'
+  }
+});
+```
 
 ## Lazy Loading
 
@@ -79,6 +91,9 @@ Credit largely goes to @sindresorhus for his [load-grunt-plugins](https://github
 
 
 ## Changelog
+
+##### 0.8.0
+- add the ability to rename plugins that gulp-load-plugins loads in.
 
 ##### 0.7.1
 - add `files` property to package.json so only required files are downloaded when installed - thanks @shinnn
