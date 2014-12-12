@@ -40,6 +40,8 @@ module.exports = function(options) {
 
   pattern.push('!gulp-load-plugins');
 
+  var loadedPluginsList = [];
+
   multimatch(names, pattern).forEach(function(name) {
     var requireName;
 
@@ -49,6 +51,8 @@ module.exports = function(options) {
       requireName = name.replace(replaceString, '');
       requireName = camelizePluginName ? camelize(requireName) : requireName;
     }
+
+    loadedPluginsList.push(requireName);
 
     if(lazy) {
       Object.defineProperty(finalObject, requireName, {
@@ -60,6 +64,10 @@ module.exports = function(options) {
       finalObject[requireName] = requireFn(name);
     }
   });
+
+  finalObject.loadedPlugins = function() {
+    return loadedPluginsList;
+  };
 
   return finalObject;
 };
