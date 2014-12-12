@@ -1,7 +1,7 @@
 'use strict';
 
-var multimatch = require('multimatch');
 var findup = require('findup-sync');
+var multimatch = require('multimatch');
 var path = require('path');
 
 function arrayify(el) {
