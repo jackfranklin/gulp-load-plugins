@@ -131,6 +131,22 @@ var commonTests = function(lazy) {
 
     assert.deepEqual(x.bar(), { name: 'foo' });
   });
+
+  it('output the name of the loaded plugins', function() {
+    var x = gulpLoadPlugins({
+      lazy: lazy,
+      config: {
+        dependencies: {
+          'gulp-foo': '1.0.0',
+          'gulp-bar': '*',
+          'gulp-insert': '*',
+          'gulp.baz': '*'
+        }
+      }
+    });
+
+    assert.deepEqual(x.loadedPlugins(), ['foo', 'bar', 'insert', 'baz']);
+  });
 };
 
 describe('no lazy loading', function() {

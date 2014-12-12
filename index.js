@@ -1,6 +1,7 @@
 'use strict';
-var multimatch = require('multimatch');
+
 var findup = require('findup-sync');
+var multimatch = require('multimatch');
 var path = require('path');
 
 function arrayify(el) {
@@ -17,14 +18,14 @@ module.exports = function(options) {
   var finalObject = {};
   options = options || {};
 
-  var pattern = arrayify(options.pattern || ['gulp-*', 'gulp.*']);
-  var config = options.config || findup('package.json', {cwd: parentDir});
-  var scope = arrayify(options.scope || ['dependencies', 'devDependencies', 'peerDependencies']);
-  var replaceString = options.replaceString || /^gulp(-|\.)/;
   var camelizePluginName = options.camelize === false ? false : true;
+  var config = options.config || findup('package.json', {cwd: parentDir});
   var lazy = 'lazy' in options ? !!options.lazy : true;
-  var requireFn = options.requireFn || require;
+  var pattern = arrayify(options.pattern || ['gulp-*', 'gulp.*']);
   var renameObj = options.rename || {};
+  var replaceString = options.replaceString || /^gulp(-|\.)/;
+  var requireFn = options.requireFn || require;
+  var scope = arrayify(options.scope || ['dependencies', 'devDependencies', 'peerDependencies']);
 
   if (typeof config === 'string') {
     config = require(config);
@@ -40,6 +41,8 @@ module.exports = function(options) {
 
   pattern.push('!gulp-load-plugins');
 
+  var loadedPluginsList = [];
+
   multimatch(names, pattern).forEach(function(name) {
     var requireName;
 
@@ -49,6 +52,8 @@ module.exports = function(options) {
       requireName = name.replace(replaceString, '');
       requireName = camelizePluginName ? camelize(requireName) : requireName;
     }
+
+    loadedPluginsList.push(requireName);
 
     if(lazy) {
       Object.defineProperty(finalObject, requireName, {
@@ -60,6 +65,10 @@ module.exports = function(options) {
       finalObject[requireName] = requireFn(name);
     }
   });
+
+  finalObject.loadedPlugins = function() {
+    return loadedPluginsList;
+  };
 
   return finalObject;
 };
