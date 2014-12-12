@@ -1,4 +1,5 @@
 'use strict';
+
 var multimatch = require('multimatch');
 var findup = require('findup-sync');
 var path = require('path');
@@ -17,14 +18,14 @@ module.exports = function(options) {
   var finalObject = {};
   options = options || {};
 
-  var pattern = arrayify(options.pattern || ['gulp-*', 'gulp.*']);
-  var config = options.config || findup('package.json', {cwd: parentDir});
-  var scope = arrayify(options.scope || ['dependencies', 'devDependencies', 'peerDependencies']);
-  var replaceString = options.replaceString || /^gulp(-|\.)/;
   var camelizePluginName = options.camelize === false ? false : true;
+  var config = options.config || findup('package.json', {cwd: parentDir});
   var lazy = 'lazy' in options ? !!options.lazy : true;
-  var requireFn = options.requireFn || require;
+  var pattern = arrayify(options.pattern || ['gulp-*', 'gulp.*']);
   var renameObj = options.rename || {};
+  var replaceString = options.replaceString || /^gulp(-|\.)/;
+  var requireFn = options.requireFn || require;
+  var scope = arrayify(options.scope || ['dependencies', 'devDependencies', 'peerDependencies']);
 
   if (typeof config === 'string') {
     config = require(config);
