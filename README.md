@@ -54,14 +54,14 @@ This frees you up from having to manually require each gulp plugin.
 
 ## Options
 
-You can pass in an argument, an object of options (the shown options are the defaults):
+You can pass in an object of options that are shown below: (the values for the keys are the defaults):
 
 ```js
 gulpLoadPlugins({
-    pattern: 'gulp-*', // the glob to search for
+    pattern: ['gulp-*', 'gulp.*'], // the glob(s) to search for
     config: 'package.json', // where to find the plugins, by default  searched up from process.cwd() 
     scope: ['dependencies', 'devDependencies', 'peerDependencies'], // which keys in the config to look within
-    replaceString: 'gulp-', // what to remove from the name of the module when adding it to the context
+    replaceString: /^gulp(-|\.)/, // what to remove from the name of the module when adding it to the context
     camelize: true, // if true, transforms hyphenated plugins names to camel case
     lazy: true, // whether the plugins should be lazy loaded on demand
     rename: {} // a mapping of plugins to rename
