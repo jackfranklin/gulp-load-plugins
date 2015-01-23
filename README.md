@@ -1,6 +1,6 @@
 # gulp-load-plugins
 
-[![npm](https://nodei.co/npm/gulp-load-plugins.png?downloads=true)](https://nodei.co/npm/gulp-load-plugins/)
+[![npm](https://nodei.co/npm/gulp-load-plugins.svg?downloads=true)](https://nodei.co/npm/gulp-load-plugins/)
 
 > Loads in any gulp plugins and attaches them to the global scope, or an object of your choice.
 
