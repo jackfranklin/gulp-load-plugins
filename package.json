@@ -18,31 +18,21 @@
   ],
   "author": "Jack Franklin",
   "contributors": [
-    {
-      "name": "Pascal Hartig"
-    },
-    {
-      "name": "Ben Briggs"
-    },
-    {
-      "name": "kombucha"
-    },
-    {
-      "name": "Nicolas Froidure"
-    },
-    {
-      "name": "Sindre Sorhus"
-    },
+    "Pascal Hartig",
+    "Ben Briggs",
+    "kombucha",
+    "Nicolas Froidure",
+    "Sindre Sorhus",
     "Julien Fontanet <julien.fontanet@vates.fr>"
   ],
   "license": "MIT",
   "dependencies": {
-    "findup-sync": "^0.1.2",
-    "multimatch": "1.0.0"
+    "findup-sync": "^0.2.1",
+    "multimatch": "2.0.0"
   },
   "devDependencies": {
     "jshint": "^2.5.1",
-    "mocha": "^1.18.2",
+    "mocha": "^2.1.0",
     "proxyquire": "^1.0.1",
     "sinon": "^1.9.1"
   }
