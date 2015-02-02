@@ -15,6 +15,7 @@ function camelize(str) {
 
 module.exports = function(options) {
   var finalObject = {};
+  var configObject, requireFn;
   options = options || {};
 
   var pattern = arrayify(options.pattern || ['gulp-*', 'gulp.*']);
@@ -23,19 +24,26 @@ module.exports = function(options) {
   var replaceString = options.replaceString || /^gulp(-|\.)/;
   var camelizePluginName = options.camelize === false ? false : true;
   var lazy = 'lazy' in options ? !!options.lazy : true;
-  var requireFn = options.requireFn || require;
   var renameObj = options.rename || {};
 
-  if (typeof config === 'string') {
-    config = require(config);
+  if(typeof options.requireFn === 'function') {
+    requireFn = options.requireFn;
+  } else if(typeof config === 'string') {
+    requireFn = function (name) {
+      return require(path.join(path.dirname(config), 'node_modules', name));
+    };
+  } else {
+    requireFn = require;
   }
 
-  if(!config) {
+  configObject = (typeof config === 'string') ? require(config) : config;
+
+  if(!configObject) {
     throw new Error('Could not find dependencies. Do you have a package.json file in your project?');
   }
 
   var names = scope.reduce(function(result, prop) {
-    return result.concat(Object.keys(config[prop] || {}));
+    return result.concat(Object.keys(configObject[prop] || {}));
   }, []);
 
   pattern.push('!gulp-load-plugins');
