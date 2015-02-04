@@ -3,7 +3,7 @@
   "version": "0.8.0",
   "description": "Automatically load any gulp plugins in your package.json",
   "scripts": {
-    "test": "mocha test.js"
+    "test": "mocha"
   },
   "files": [
     "index.js"
@@ -28,6 +28,7 @@
   "license": "MIT",
   "dependencies": {
     "findup-sync": "^0.2.1",
+    "gulp-uglify": "^1.1.0",
     "multimatch": "2.0.0"
   },
   "devDependencies": {
