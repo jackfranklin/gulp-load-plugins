@@ -30,7 +30,8 @@ module.exports = function(options) {
     requireFn = options.requireFn;
   } else if(typeof config === 'string') {
     requireFn = function (name) {
-      return require(path.join(path.dirname(config), 'node_modules', name));
+      var searchFor = path.join('node_modules', name);
+      return require(findup(searchFor, {cwd: path.dirname(config)}));
     };
   } else {
     requireFn = require;
