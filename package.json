@@ -23,12 +23,12 @@
     "kombucha",
     "Nicolas Froidure",
     "Sindre Sorhus",
-    "Julien Fontanet <julien.fontanet@vates.fr>"
+    "Julien Fontanet <julien.fontanet@vates.fr>",
+    "Callum Macrae"
   ],
   "license": "MIT",
   "dependencies": {
     "findup-sync": "^0.2.1",
-    "gulp-uglify": "^1.1.0",
     "multimatch": "2.0.0"
   },
   "devDependencies": {

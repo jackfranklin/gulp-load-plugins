@@ -15,7 +15,8 @@ function camelize(str) {
 
 module.exports = function(options) {
   var finalObject = {};
-  var configObject, requireFn;
+  var configObject;
+  var requireFn;
   options = options || {};
 
   var pattern = arrayify(options.pattern || ['gulp-*', 'gulp.*']);
@@ -30,6 +31,8 @@ module.exports = function(options) {
     requireFn = options.requireFn;
   } else if(typeof config === 'string') {
     requireFn = function (name) {
+      // This searches up from the specified package.json file, making sure
+      // the config option behaves as expected. See issue #56.
       var searchFor = path.join('node_modules', name);
       return require(findup(searchFor, {cwd: path.dirname(config)}));
     };
