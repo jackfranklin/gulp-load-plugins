@@ -92,6 +92,9 @@ Credit largely goes to @sindresorhus for his [load-grunt-plugins](https://github
 
 ## Changelog
 
+##### 0.8.1
+- fixed a bug where gulp-load-plugins would use the right `package.json` file but the wrong `node_modules` directory - thanks @callumacrae
+
 ##### 0.8.0
 - add the ability to rename plugins that gulp-load-plugins loads in.
 
