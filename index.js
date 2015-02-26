@@ -13,13 +13,31 @@ function camelize(str) {
   });
 }
 
+function defineProperty(options) {
+  var lazy = options.lazy;
+  var finalObject = options.object;
+  var requireName = options.requireName;
+  var name = options.name;
+  var requireFn = options.requireFn;
+
+  if(lazy) {
+    Object.defineProperty(finalObject, requireName, {
+      get: function() {
+        return requireFn(name);
+      }
+    });
+  } else {
+    finalObject[requireName] = requireFn(name);
+  }
+}
+
 module.exports = function(options) {
   var finalObject = {};
   var configObject;
   var requireFn;
   options = options || {};
 
-  var pattern = arrayify(options.pattern || ['gulp-*', 'gulp.*']);
+  var pattern = arrayify(options.pattern || ['gulp-*', 'gulp.*', '@*/gulp{.,-}*']);
   var config = options.config || findup('package.json', {cwd: parentDir});
   var scope = arrayify(options.scope || ['dependencies', 'devDependencies', 'peerDependencies']);
   var replaceString = options.replaceString || /^gulp(-|\.)/;
@@ -53,23 +71,41 @@ module.exports = function(options) {
   pattern.push('!gulp-load-plugins');
 
   multimatch(names, pattern).forEach(function(name) {
-    var requireName;
+    var requireName, match;
 
-    if(renameObj[name]) {
-      requireName = options.rename[name];
-    } else {
-      requireName = name.replace(replaceString, '');
-      requireName = camelizePluginName ? camelize(requireName) : requireName;
-    }
-
-    if(lazy) {
-      Object.defineProperty(finalObject, requireName, {
-        get: function() {
-          return requireFn(name);
-        }
+    if(match = name.match(/@(.+)\/gulp/i)) {
+      finalObject[match[1]] = {};
+      if(renameObj[name]) {
+        requireName = options.rename[name];
+      } else {
+        var moduleName = name.split('/')[1];
+        requireName = moduleName.replace(replaceString, '');
+        requireName = camelizePluginName ? camelize(requireName) : requireName;
+      }
+      defineProperty({
+        lazy: lazy,
+        name: name,
+        requireName: requireName,
+        object: finalObject[match[1]],
+        requireFn: requireFn
       });
     } else {
-      finalObject[requireName] = requireFn(name);
+      if(renameObj[name]) {
+        requireName = options.rename[name];
+      } else {
+        requireName = name.replace(replaceString, '');
+        requireName = camelizePluginName ? camelize(requireName) : requireName;
+      }
+
+      if(lazy) {
+        Object.defineProperty(finalObject, requireName, {
+          get: function() {
+            return requireFn(name);
+          }
+        });
+      } else {
+        finalObject[requireName] = requireFn(name);
+      }
     }
   });
 
