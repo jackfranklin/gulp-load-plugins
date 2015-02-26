@@ -13,7 +13,7 @@ var gulpLoadPlugins = (function() {
 
   var proxyquire = require('proxyquire').noCallThru();
 
-  return proxyquire('./', {
+  return proxyquire('../', {
     'gulp-foo': wrapInFunc({ name: 'foo' }),
     'gulp-bar': wrapInFunc({ name: 'bar' }),
     'gulp-foo-bar': wrapInFunc({ name: 'foo-bar' }),
@@ -185,5 +185,12 @@ describe('with lazy loading', function() {
   it('does when the property is accessed', function() {
     x.insert();
     assert(spy.called);
+  });
+});
+
+describe('requiring from another directory', function() {
+  it('allows you to use in a lower directory', function() {
+    var plugins = require('../')();
+    assert.ok(typeof plugins.test === 'function');
   });
 });

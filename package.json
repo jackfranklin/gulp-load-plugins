@@ -3,7 +3,7 @@
   "version": "0.8.0",
   "description": "Automatically load any gulp plugins in your package.json",
   "scripts": {
-    "test": "mocha test.js"
+    "test": "mocha"
   },
   "files": [
     "index.js"
@@ -23,7 +23,8 @@
     "kombucha",
     "Nicolas Froidure",
     "Sindre Sorhus",
-    "Julien Fontanet <julien.fontanet@vates.fr>"
+    "Julien Fontanet <julien.fontanet@vates.fr>",
+    "Callum Macrae"
   ],
   "license": "MIT",
   "dependencies": {
