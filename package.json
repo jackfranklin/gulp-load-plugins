@@ -3,7 +3,7 @@
   "version": "0.8.1",
   "description": "Automatically load any gulp plugins in your package.json",
   "scripts": {
-    "test": "mocha"
+    "test": "mocha -R dot"
   },
   "files": [
     "index.js"

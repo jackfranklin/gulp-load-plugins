@@ -31,6 +31,12 @@ function defineProperty(options) {
   }
 }
 
+function getRequireName(name) {
+  var requireName = name.replace(replaceString, '');
+  requireName = camelizePluginName ? camelize(requireName) : requireName;
+  return requireName;
+}
+
 module.exports = function(options) {
   var finalObject = {};
   var configObject;
@@ -70,18 +76,27 @@ module.exports = function(options) {
 
   pattern.push('!gulp-load-plugins');
 
+  function getRequireName(name) {
+    var requireName;
+
+    if(renameObj[name]) {
+      requireName = options.rename[name];
+    } else {
+      var moduleName = name.split('/')[1];
+      requireName = name.replace(replaceString, '');
+      requireName = camelizePluginName ? camelize(requireName) : requireName;
+    }
+
+    return requireName;
+  }
+
   multimatch(names, pattern).forEach(function(name) {
     var requireName, match;
 
     if(match = name.match(/@(.+)\/gulp/i)) {
       finalObject[match[1]] = {};
-      if(renameObj[name]) {
-        requireName = options.rename[name];
-      } else {
-        var moduleName = name.split('/')[1];
-        requireName = moduleName.replace(replaceString, '');
-        requireName = camelizePluginName ? camelize(requireName) : requireName;
-      }
+      requireName = getRequireName(name.split('/')[1]);
+
       defineProperty({
         lazy: lazy,
         name: name,
@@ -90,22 +105,15 @@ module.exports = function(options) {
         requireFn: requireFn
       });
     } else {
-      if(renameObj[name]) {
-        requireName = options.rename[name];
-      } else {
-        requireName = name.replace(replaceString, '');
-        requireName = camelizePluginName ? camelize(requireName) : requireName;
-      }
+      requireName = getRequireName(name);
 
-      if(lazy) {
-        Object.defineProperty(finalObject, requireName, {
-          get: function() {
-            return requireFn(name);
-          }
-        });
-      } else {
-        finalObject[requireName] = requireFn(name);
-      }
+      defineProperty({
+        lazy: lazy,
+        name: name,
+        requireName: requireName,
+        object: finalObject,
+        requireFn: requireFn
+      });
     }
   });
 
