@@ -13,31 +13,8 @@ function camelize(str) {
   });
 }
 
-function defineProperty(options) {
-  var lazy = options.lazy;
-  var finalObject = options.object;
-  var requireName = options.requireName;
-  var name = options.name;
-  var requireFn = options.requireFn;
-
-  if(lazy) {
-    Object.defineProperty(finalObject, requireName, {
-      get: function() {
-        return requireFn(name);
-      }
-    });
-  } else {
-    finalObject[requireName] = requireFn(name);
-  }
-}
-
-function getRequireName(name) {
-  var requireName = name.replace(replaceString, '');
-  requireName = camelizePluginName ? camelize(requireName) : requireName;
-  return requireName;
-}
-
 module.exports = function(options) {
+  console.log('i have been run');
   var finalObject = {};
   var configObject;
   var requireFn;
@@ -76,6 +53,18 @@ module.exports = function(options) {
 
   pattern.push('!gulp-load-plugins');
 
+  function defineProperty(object, requireName, name) {
+    if(lazy) {
+      Object.defineProperty(object, requireName, {
+        get: function() {
+          return requireFn(name);
+        }
+      });
+    } else {
+      finalObject[requireName] = requireFn(name);
+    }
+  }
+
   function getRequireName(name) {
     var requireName;
 
@@ -94,26 +83,17 @@ module.exports = function(options) {
     var requireName, match;
 
     if(match = name.match(/@(.+)\/gulp/i)) {
-      finalObject[match[1]] = {};
+      console.log('is a scoped plugin', name);
+      var scope = match[1];
+      finalObject[scope] = finalObject[scope] || {};
       requireName = getRequireName(name.split('/')[1]);
 
-      defineProperty({
-        lazy: lazy,
-        name: name,
-        requireName: requireName,
-        object: finalObject[match[1]],
-        requireFn: requireFn
-      });
+      defineProperty(finalObject[scope], requireName, name);
     } else {
+      console.log('is not a scoped plugin', name);
       requireName = getRequireName(name);
 
-      defineProperty({
-        lazy: lazy,
-        name: name,
-        requireName: requireName,
-        object: finalObject,
-        requireFn: requireFn
-      });
+      defineProperty(finalObject, requireName, name);
     }
   });
 

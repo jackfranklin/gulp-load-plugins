@@ -133,16 +133,17 @@ var commonTests = function(lazy) {
     assert.deepEqual(x.bar(), { name: 'foo' });
   });
 
-  it('can deal with scoped plugins', function() {
+  it.only('can deal with scoped plugins', function() {
     var x = gulpLoadPlugins({
-      lazy: lazy,
+      lazy: false,
       config: {
         dependencies: {
-          'gulp-foo': '1.0.0',
           '@myco/gulp-test': '1.0.0'
         }
       }
     });
+
+    console.log(x);
 
     assert.deepEqual(x.myco.test(), { name: 'test' });
   });
