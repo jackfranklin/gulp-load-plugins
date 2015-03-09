@@ -80,6 +80,16 @@ gulpLoadPlugins({
 });
 ```
 
+## npm Scopes
+
+`gulp-load-plugins` comes with [npm scope](https://docs.npmjs.com/misc/scope) support. The major difference is that scopped plugins are accessible through a variable on `plugins` that represents the scope. For example, if the plugin is `@myco/gulp-test-plugin` then you can access the plugin as shown in the following example:
+
+```js
+var plugins = require('gulp-load-plugins')();
+
+plugins.myco.testPlugin();
+```
+
 ## Lazy Loading
 
 In 0.4.0 and prior, lazy loading used to only work with plugins that return a function. In newer versions though, lazy loading should work for any plugin. If you have a problem related to this please try disabling lazy loading and see if that fixes it. Feel free to open an issue on this repo too.
