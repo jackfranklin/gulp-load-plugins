@@ -4,7 +4,7 @@
 
 > Loads in any gulp plugins and attaches them to the global scope, or an object of your choice.
 
-[![Build Status](https://travis-ci.org/jackfranklin/gulp-load-plugins.svg)](https://travis-ci.org/jackfranklin/gulp-load-plugins)
+[![Build Status](https://travis-ci.org/jackfranklin/gulp-load-plugins.svg?branch=master)](https://travis-ci.org/jackfranklin/gulp-load-plugins)
 
 
 ## Install
@@ -59,7 +59,7 @@ You can pass in an object of options that are shown below: (the values for the k
 ```js
 gulpLoadPlugins({
     pattern: ['gulp-*', 'gulp.*'], // the glob(s) to search for
-    config: 'package.json', // where to find the plugins, by default  searched up from process.cwd() 
+    config: 'package.json', // where to find the plugins, by default  searched up from process.cwd()
     scope: ['dependencies', 'devDependencies', 'peerDependencies'], // which keys in the config to look within
     replaceString: /^gulp(-|\.)/, // what to remove from the name of the module when adding it to the context
     camelize: true, // if true, transforms hyphenated plugins names to camel case
