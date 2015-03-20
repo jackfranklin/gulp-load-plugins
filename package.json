@@ -24,7 +24,8 @@
     "Nicolas Froidure",
     "Sindre Sorhus",
     "Julien Fontanet <julien.fontanet@vates.fr>",
-    "Callum Macrae"
+    "Callum Macrae",
+    "Hutson Betts"
   ],
   "license": "MIT",
   "dependencies": {

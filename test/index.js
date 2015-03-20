@@ -23,7 +23,8 @@ var gulpLoadPlugins = (function() {
       'wrap':   wrapInFunc({ name: 'insert.wrap' })
     },
     'gulp.baz': wrapInFunc({ name: 'baz' }),
-    'findup-sync': function() { return null; }
+    'findup-sync': function() { return null; },
+    '@myco/gulp-test-plugin': wrapInFunc({ name: 'test' })
   });
 })();
 
@@ -130,6 +131,15 @@ var commonTests = function(lazy) {
     });
 
     assert.deepEqual(x.bar(), { name: 'foo' });
+  });
+
+  it('supports loading scopped package', function() {
+    var x = gulpLoadPlugins({
+      lazy: lazy,
+      config: { dependencies: { '@myco/gulp-test-plugin': '1.0.0' } },
+    });
+
+    assert.deepEqual(x.myco.testPlugin(), { name: 'test' });
   });
 };
 
