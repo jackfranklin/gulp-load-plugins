@@ -102,6 +102,9 @@ Credit largely goes to @sindresorhus for his [load-grunt-plugins](https://github
 
 ## Changelog
 
+##### 0.9.0
+- add support for npm-scoped plugins. [PR](https://github.com/jackfranklin/gulp-load-plugins/pull/63) - thanks @hbetts
+
 ##### 0.8.1
 - fixed a bug where gulp-load-plugins would use the right `package.json` file but the wrong `node_modules` directory - thanks @callumacrae
 
