@@ -198,7 +198,15 @@ describe('with lazy loading', function() {
   });
 });
 
-describe('requiring from another directory', function() {
+describe('common functionality', function () {
+  it('throws a sensible error when not found', function () {
+    var x = gulpLoadPlugins({ config: __dirname + '/package.json' });
+
+    assert.throws(function () {
+      x.oops();
+    }, (/Cannot find `gulp-oops`/));
+  });
+
   it('allows you to use in a lower directory', function() {
     var plugins = require('../')();
     assert.ok(typeof plugins.test === 'function');
