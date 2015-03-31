@@ -34,7 +34,13 @@ module.exports = function(options) {
       // This searches up from the specified package.json file, making sure
       // the config option behaves as expected. See issue #56.
       var searchFor = path.join('node_modules', name);
-      return require(findup(searchFor, {cwd: path.dirname(config)}) || name);
+
+      var src = findup(searchFor, {cwd: path.dirname(config)}) || name;
+      if (src !== null) {
+        return require(src);
+      } else {
+        throw new Error('Cannot find `' + name + '` in your node_modules!');
+      }
     };
   } else {
     requireFn = require;
@@ -82,7 +88,7 @@ module.exports = function(options) {
 
   multimatch(names, pattern).forEach(function(name) {
     if(scopeTest.test(name)) {
-	  var decomposition = scopeDecomposition.exec(name);
+      var decomposition = scopeDecomposition.exec(name);
 
       if(!finalObject.hasOwnProperty(decomposition[1])) {
         finalObject[decomposition[1]] = {};
