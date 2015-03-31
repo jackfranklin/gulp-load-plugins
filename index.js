@@ -36,9 +36,9 @@ module.exports = function(options) {
       var searchFor = path.join('node_modules', name);
       var src = findup(searchFor, {cwd: path.dirname(config)});
       if (src !== null) {
-      	return require(src);
+        return require(src);
       } else {
-      	throw new Error('Cannot find `' + name + '` in your node_modules!');
+        throw new Error('Cannot find `' + name + '` in your node_modules!');
       }
     };
   } else {
