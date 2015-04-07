@@ -34,7 +34,13 @@ module.exports = function(options) {
       // This searches up from the specified package.json file, making sure
       // the config option behaves as expected. See issue #56.
       var searchFor = path.join('node_modules', name);
-      return require(findup(searchFor, {cwd: path.dirname(config)}));
+      var result = findup(searchFor, {cwd: path.dirname(config)});
+      if (result) {
+        return require(result);
+      } else {
+        // Fall back on default NodeJS require() behaviour. See issue #71
+        return require(name);
+      }
     };
   } else {
     requireFn = require;
