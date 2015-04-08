@@ -25,7 +25,8 @@
     "Sindre Sorhus",
     "Julien Fontanet <julien.fontanet@vates.fr>",
     "Callum Macrae",
-    "Hutson Betts"
+    "Hutson Betts",
+    "Christian Maniewski"
   ],
   "license": "MIT",
   "dependencies": {
