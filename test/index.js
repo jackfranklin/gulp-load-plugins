@@ -204,3 +204,13 @@ describe('requiring from another directory', function() {
     assert.ok(typeof plugins.test === 'function');
   });
 });
+
+describe('requiring from global directory', function() {
+  it('allows you to use the NODE_PATH directory', function() {
+    if (process.env.NODE_PATH !== 'test/global_modules') {
+      throw new Error('No NODE_PATH found. Please run the tests using npm test.');
+    }
+    var plugins = require('../')();
+    assert.ok(typeof plugins.testGlobal === 'function');
+  });
+});
