@@ -102,6 +102,10 @@ Credit largely goes to @sindresorhus for his [load-grunt-plugins](https://github
 
 ## Changelog
 
+##### 0.10.0
+- throw a more informative error if a plugin is loaded that gulp-load-plugins can't find. [PR](https://github.com/jackfranklin/gulp-load-plugins/pull/68) - thanks @connor4312
+- allow `require` to look on the `NODE_PATH` if it can't find the module in the working directory. [PR](https://github.com/jackfranklin/gulp-load-plugins/pull/69) - thanks @chmanie
+
 ##### 0.9.0
 - add support for npm-scoped plugins. [PR](https://github.com/jackfranklin/gulp-load-plugins/pull/63) - thanks @hbetts
 
