@@ -59,7 +59,7 @@ You can pass in an object of options that are shown below: (the values for the k
 ```js
 gulpLoadPlugins({
     pattern: ['gulp-*', 'gulp.*'], // the glob(s) to search for
-    config: 'package.json', // where to find the plugins, by default  searched up from process.cwd()
+    config: 'package.json', // where to find the plugins, by default searched up from process.cwd()
     scope: ['dependencies', 'devDependencies', 'peerDependencies'], // which keys in the config to look within
     replaceString: /^gulp(-|\.)/, // what to remove from the name of the module when adding it to the context
     camelize: true, // if true, transforms hyphenated plugins names to camel case
@@ -82,7 +82,7 @@ gulpLoadPlugins({
 
 ## npm Scopes
 
-`gulp-load-plugins` comes with [npm scope](https://docs.npmjs.com/misc/scope) support. The major difference is that scopped plugins are accessible through a variable on `plugins` that represents the scope. For example, if the plugin is `@myco/gulp-test-plugin` then you can access the plugin as shown in the following example:
+`gulp-load-plugins` comes with [npm scope](https://docs.npmjs.com/misc/scope) support. The major difference is that scoped plugins are accessible through an object on `plugins` that represents the scope. For example, if the plugin is `@myco/gulp-test-plugin` then you can access the plugin as shown in the following example:
 
 ```js
 var plugins = require('gulp-load-plugins')();
