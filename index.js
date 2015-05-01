@@ -2,6 +2,7 @@
 var multimatch = require('multimatch');
 var findup = require('findup-sync');
 var path = require('path');
+var resolve = require('resolve');
 
 function arrayify(el) {
   return Array.isArray(el) ? el : [el];
@@ -33,14 +34,8 @@ module.exports = function(options) {
     requireFn = function (name) {
       // This searches up from the specified package.json file, making sure
       // the config option behaves as expected. See issue #56.
-      var searchFor = path.join('node_modules', name);
-
-      var src = findup(searchFor, {cwd: path.dirname(config)}) || name;
-      if (src !== null) {
-        return require(src);
-      } else {
-        throw new Error('Cannot find `' + name + '` in your node_modules!');
-      }
+      var src = resolve.sync(name, { basedir: path.dirname(config) });
+      return require(src);
     };
   } else {
     requireFn = require;
