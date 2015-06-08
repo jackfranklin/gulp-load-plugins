@@ -102,6 +102,10 @@ Credit largely goes to @sindresorhus for his [load-grunt-plugins](https://github
 
 ## Changelog
 
+##### 1.0.0-rc.1
+- This is the first release candidate for what will become version 1 of gulp-load-plugins. Once a fix for [#70](https://github.com/jackfranklin/gulp-load-plugins/issues/70) is landed, I plan to release V1.
+- **Breaking Change** support for `NODE_PATH` is no longer supported. It was causing complexities and in [the PR that droppped support](https://github.com/jackfranklin/gulp-load-plugins/pull/75) no one shouted that they required `NODE_PATH` support.
+
 ##### 0.10.0
 - throw a more informative error if a plugin is loaded that gulp-load-plugins can't find. [PR](https://github.com/jackfranklin/gulp-load-plugins/pull/68) - thanks @connor4312
 - allow `require` to look on the `NODE_PATH` if it can't find the module in the working directory. [PR](https://github.com/jackfranklin/gulp-load-plugins/pull/69) - thanks @chmanie
