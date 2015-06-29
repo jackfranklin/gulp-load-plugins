@@ -22,7 +22,7 @@ module.exports = function(options) {
 
   var pattern = arrayify(options.pattern || ['gulp-*', 'gulp.*', '@*/gulp{-,.}*']);
   var config = options.config || findup('package.json', {cwd: parentDir});
-  var scope = arrayify(options.scope || ['dependencies', 'devDependencies', 'peerDependencies']);
+  var scope = arrayify(options.scope || ['dependencies', 'devDependencies', 'peerDependencies', 'optionalDependencies']);
   var replaceString = options.replaceString || /^gulp(-|\.)/;
   var camelizePluginName = options.camelize === false ? false : true;
   var lazy = 'lazy' in options ? !!options.lazy : true;

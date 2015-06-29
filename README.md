@@ -60,7 +60,7 @@ You can pass in an object of options that are shown below: (the values for the k
 gulpLoadPlugins({
     pattern: ['gulp-*', 'gulp.*'], // the glob(s) to search for
     config: 'package.json', // where to find the plugins, by default searched up from process.cwd()
-    scope: ['dependencies', 'devDependencies', 'peerDependencies'], // which keys in the config to look within
+    scope: ['dependencies', 'devDependencies', 'peerDependencies', 'optionalDependencies'], // which keys in the config to look within
     replaceString: /^gulp(-|\.)/, // what to remove from the name of the module when adding it to the context
     camelize: true, // if true, transforms hyphenated plugins names to camel case
     lazy: true, // whether the plugins should be lazy loaded on demand
