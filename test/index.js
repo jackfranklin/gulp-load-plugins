@@ -141,6 +141,27 @@ var commonTests = function(lazy) {
 
     assert.deepEqual(x.myco.testPlugin(), { name: 'test' });
   });
+
+  it('supports custom rename functions', function () {
+    var x = gulpLoadPlugins({
+      renameFn: function () {
+        return 'baz';
+      },
+      config: {
+        dependencies: {
+          'gulp-foo-bar': '*'
+        }
+      }
+    });
+
+    assert.throws(function () {
+      x.fooBar();
+    });
+
+    assert.deepEqual(x.baz(), {
+      name: 'foo-bar'
+    });
+  });
 };
 
 describe('no lazy loading', function() {

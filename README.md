@@ -64,7 +64,8 @@ gulpLoadPlugins({
     replaceString: /^gulp(-|\.)/, // what to remove from the name of the module when adding it to the context
     camelize: true, // if true, transforms hyphenated plugins names to camel case
     lazy: true, // whether the plugins should be lazy loaded on demand
-    rename: {} // a mapping of plugins to rename
+    rename: {}, // a mapping of plugins to rename
+    renameFn: function (name) { ... } // a function to handle the renaming of plugins (the default works)
 });
 ```
 
