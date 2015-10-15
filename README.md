@@ -105,6 +105,9 @@ Credit largely goes to @sindresorhus for his [load-grunt-plugins](https://github
 
 ## Changelog
 
+##### 1.0.0
+- added `renameFn` function to give users complete control over the name a plugin should be given when loaded - thanks @callumacrae
+
 ##### 1.0.0-rc.1
 - This is the first release candidate for what will become version 1 of gulp-load-plugins. Once a fix for [#70](https://github.com/jackfranklin/gulp-load-plugins/issues/70) is landed, I plan to release V1.
 - **Breaking Change** support for `NODE_PATH` is no longer supported. It was causing complexities and in [the PR that droppped support](https://github.com/jackfranklin/gulp-load-plugins/pull/75) no one shouted that they required `NODE_PATH` support.
