@@ -81,6 +81,8 @@ gulpLoadPlugins({
 });
 ```
 
+Note that if you specify the `renameFn` options with your own custom rename function, while the `rename` option will still work, the `replaceString` and `camelize` options will be ignored.
+
 ## npm Scopes
 
 `gulp-load-plugins` comes with [npm scope](https://docs.npmjs.com/misc/scope) support. The major difference is that scoped plugins are accessible through an object on `plugins` that represents the scope. For example, if the plugin is `@myco/gulp-test-plugin` then you can access the plugin as shown in the following example:
