@@ -24,9 +24,14 @@ module.exports = function(options) {
   var config = options.config || findup('package.json', {cwd: parentDir});
   var scope = arrayify(options.scope || ['dependencies', 'devDependencies', 'peerDependencies']);
   var replaceString = options.replaceString || /^gulp(-|\.)/;
-  var camelizePluginName = options.camelize === false ? false : true;
+  var camelizePluginName = options.camelize !== false;
   var lazy = 'lazy' in options ? !!options.lazy : true;
   var renameObj = options.rename || {};
+
+  var renameFn = options.renameFn || function (name) {
+    name = name.replace(replaceString, '');
+    return camelizePluginName ? camelize(name) : name;
+  };
 
   if(typeof options.requireFn === 'function') {
     requireFn = options.requireFn;
@@ -71,8 +76,7 @@ module.exports = function(options) {
     if(renameObj[name]) {
       requireName = options.rename[name];
     } else {
-      requireName = name.replace(replaceString, '');
-      requireName = camelizePluginName ? camelize(requireName) : requireName;
+      requireName = renameFn(name);
     }
 
     return requireName;
