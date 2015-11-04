@@ -3,6 +3,7 @@ var multimatch = require('multimatch');
 var findup = require('findup-sync');
 var path = require('path');
 var resolve = require('resolve');
+var chalk = require('chalk');
 
 function arrayify(el) {
   return Array.isArray(el) ? el : [el];
@@ -20,6 +21,7 @@ module.exports = function(options) {
   var requireFn;
   options = options || {};
 
+  var DEBUG = options.DEBUG;
   var pattern = arrayify(options.pattern || ['gulp-*', 'gulp.*', '@*/gulp{-,.}*']);
   var config = options.config || findup('package.json', {cwd: parentDir});
   var scope = arrayify(options.scope || ['dependencies', 'devDependencies', 'peerDependencies']);
@@ -58,14 +60,24 @@ module.exports = function(options) {
 
   pattern.push('!gulp-load-plugins');
 
+  function logDebug(message, chalkColor) {
+    console.log(chalkColor(message));
+  }
+
   function defineProperty(object, requireName, name) {
     if(lazy) {
       Object.defineProperty(object, requireName, {
         get: function() {
+          if(DEBUG) {
+            logDebug('gulp-load-plugins: lazyloading ' + name + '...', chalk.green);
+          }
           return requireFn(name);
         }
       });
     } else {
+      if(DEBUG) {
+        logDebug('gulp-load-plugins: loading ' + name + '...', chalk.green);
+      }
       object[requireName] = requireFn(name);
     }
   }
@@ -77,6 +89,10 @@ module.exports = function(options) {
       requireName = options.rename[name];
     } else {
       requireName = renameFn(name);
+    }
+
+    if(DEBUG) {
+      logDebug('gulp-load-plugins: renaming ' + name + ' into ' + requireName, chalk.yellow);
     }
 
     return requireName;
@@ -97,7 +113,7 @@ module.exports = function(options) {
     } else {
       defineProperty(finalObject, getRequireName(name), name);
     }
-
+    
   });
 
   return finalObject;
