@@ -92,7 +92,7 @@ module.exports = function(options) {
     }
 
     if(DEBUG) {
-      logDebug('gulp-load-plugins: renaming ' + name + ' into ' + requireName, chalk.yellow);
+      logDebug('gulp-load-plugins: renaming ' + name + ' to ' + requireName, chalk.yellow);
     }
 
     return requireName;
@@ -113,7 +113,7 @@ module.exports = function(options) {
     } else {
       defineProperty(finalObject, getRequireName(name), name);
     }
-    
+
   });
 
   return finalObject;
