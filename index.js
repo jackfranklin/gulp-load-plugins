@@ -21,7 +21,7 @@ module.exports = function(options) {
   var requireFn;
   options = options || {};
 
-  var DEBUG = options.DEBUG;
+  var DEBUG = options.DEBUG || false;
   var pattern = arrayify(options.pattern || ['gulp-*', 'gulp.*', '@*/gulp{-,.}*']);
   var config = options.config || findup('package.json', {cwd: parentDir});
   var scope = arrayify(options.scope || ['dependencies', 'devDependencies', 'peerDependencies']);
@@ -29,6 +29,8 @@ module.exports = function(options) {
   var camelizePluginName = options.camelize !== false;
   var lazy = 'lazy' in options ? !!options.lazy : true;
   var renameObj = options.rename || {};
+
+  logDebug('gulp-load-plugins: Debug enabled with options: ' + JSON.stringify(options), chalk.green);
 
   var renameFn = options.renameFn || function (name) {
     name = name.replace(replaceString, '');
@@ -58,26 +60,27 @@ module.exports = function(options) {
     return result.concat(Object.keys(configObject[prop] || {}));
   }, []);
 
+  logDebug('gulp-load-plugins: ' + names.length + ' plugin(s) found: ' + names.join(' '), chalk.green);
+
   pattern.push('!gulp-load-plugins');
 
   function logDebug(message, chalkColor) {
-    console.log(chalkColor(message));
+    if(DEBUG) {
+      console.log(chalkColor(message));
+    }
   }
 
   function defineProperty(object, requireName, name) {
     if(lazy) {
+      logDebug('gulp-load-plugins: lazyload: adding property ' + requireName, chalk.green);
       Object.defineProperty(object, requireName, {
         get: function() {
-          if(DEBUG) {
-            logDebug('gulp-load-plugins: lazyloading ' + name + '...', chalk.green);
-          }
+          logDebug('gulp-load-plugins: lazyload: requiring ' + name + '...', chalk.green);
           return requireFn(name);
         }
       });
     } else {
-      if(DEBUG) {
-        logDebug('gulp-load-plugins: loading ' + name + '...', chalk.green);
-      }
+      logDebug('gulp-load-plugins: requiring ' + name + '...', chalk.green);
       object[requireName] = requireFn(name);
     }
   }
@@ -91,9 +94,7 @@ module.exports = function(options) {
       requireName = renameFn(name);
     }
 
-    if(DEBUG) {
-      logDebug('gulp-load-plugins: renaming ' + name + ' to ' + requireName, chalk.yellow);
-    }
+    logDebug('gulp-load-plugins: renaming ' + name + ' to ' + requireName, chalk.yellow);
 
     return requireName;
   }
