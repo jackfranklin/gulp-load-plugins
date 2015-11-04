@@ -32,8 +32,8 @@
   ],
   "license": "MIT",
   "dependencies": {
-    "chalk": "^1.1.1",
     "findup-sync": "^0.2.1",
+    "gulp-util": "^3.0.7",
     "multimatch": "2.0.0",
     "resolve": "^1.1.6"
   },
