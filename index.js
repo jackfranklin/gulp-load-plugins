@@ -3,6 +3,7 @@ var multimatch = require('multimatch');
 var findup = require('findup-sync');
 var path = require('path');
 var resolve = require('resolve');
+var gutil = require('gulp-util');
 
 function arrayify(el) {
   return Array.isArray(el) ? el : [el];
@@ -20,6 +21,7 @@ module.exports = function(options) {
   var requireFn;
   options = options || {};
 
+  var DEBUG = options.DEBUG || false;
   var pattern = arrayify(options.pattern || ['gulp-*', 'gulp.*', '@*/gulp{-,.}*']);
   var config = options.config || findup('package.json', {cwd: parentDir});
   var scope = arrayify(options.scope || ['dependencies', 'devDependencies', 'peerDependencies']);
@@ -27,6 +29,8 @@ module.exports = function(options) {
   var camelizePluginName = options.camelize !== false;
   var lazy = 'lazy' in options ? !!options.lazy : true;
   var renameObj = options.rename || {};
+
+  logDebug('Debug enabled with options: ' + JSON.stringify(options));
 
   var renameFn = options.renameFn || function (name) {
     name = name.replace(replaceString, '');
@@ -56,16 +60,27 @@ module.exports = function(options) {
     return result.concat(Object.keys(configObject[prop] || {}));
   }, []);
 
+  logDebug(names.length + ' plugin(s) found: ' + names.join(' '));
+
   pattern.push('!gulp-load-plugins');
+
+  function logDebug(message) {
+    if(DEBUG) {
+      gutil.log(gutil.colors.green('gulp-load-plugins: ' + message));
+    }
+  }
 
   function defineProperty(object, requireName, name) {
     if(lazy) {
+      logDebug('lazyload: adding property ' + requireName);
       Object.defineProperty(object, requireName, {
         get: function() {
+          logDebug('lazyload: requiring ' + name + '...');
           return requireFn(name);
         }
       });
     } else {
+      logDebug('requiring ' + name + '...');
       object[requireName] = requireFn(name);
     }
   }
@@ -78,6 +93,8 @@ module.exports = function(options) {
     } else {
       requireName = renameFn(name);
     }
+
+    logDebug('renaming ' + name + ' to ' + requireName);
 
     return requireName;
   }
