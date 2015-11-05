@@ -58,6 +58,7 @@ You can pass in an object of options that are shown below: (the values for the k
 
 ```js
 gulpLoadPlugins({
+    DEBUG: false, // when set to true, the plugin will log info to console. Useful for bug reporting and issue debugging
     pattern: ['gulp-*', 'gulp.*'], // the glob(s) to search for
     config: 'package.json', // where to find the plugins, by default searched up from process.cwd()
     scope: ['dependencies', 'devDependencies', 'peerDependencies'], // which keys in the config to look within
@@ -104,6 +105,10 @@ Credit largely goes to @sindresorhus for his [load-grunt-plugins](https://github
 
 
 ## Changelog
+
+##### 1.1
+- added `DEBUG` option to turn on logging and help us debug issues - thanks @dcamilleri
+
 
 ##### 1.0.0
 - added `renameFn` function to give users complete control over the name a plugin should be given when loaded - thanks @callumacrae
