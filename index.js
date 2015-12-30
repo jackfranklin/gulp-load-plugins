@@ -102,7 +102,10 @@ module.exports = function(options) {
   var scopeTest = new RegExp('^@');
   var scopeDecomposition = new RegExp('^@(.+)/(.+)');
 
-  multimatch(names, pattern).forEach(function(name) {
+  var multimatched = multimatch(names, pattern);
+  logDebug('multimatched: ' + multimatched);
+
+  multimatched.forEach(function(name) {
     if(scopeTest.test(name)) {
       var decomposition = scopeDecomposition.exec(name);
 
@@ -110,8 +113,10 @@ module.exports = function(options) {
         finalObject[decomposition[1]] = {};
       }
 
+      logDebug('scopeTest returned true for: ' + name);
       defineProperty(finalObject[decomposition[1]], getRequireName(decomposition[2]), name);
     } else {
+      logDebug('scopeTest returned false for: ' + name);
       defineProperty(finalObject, getRequireName(name), name);
     }
 
