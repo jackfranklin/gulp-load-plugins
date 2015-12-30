@@ -71,17 +71,22 @@ module.exports = function(options) {
   }
 
   function defineProperty(object, requireName, name) {
-    if(lazy) {
-      logDebug('lazyload: adding property ' + requireName);
-      Object.defineProperty(object, requireName, {
-        get: function() {
-          logDebug('lazyload: requiring ' + name + '...');
-          return requireFn(name);
-        }
-      });
-    } else {
-      logDebug('requiring ' + name + '...');
-      object[requireName] = requireFn(name);
+    try {
+      if(lazy) {
+        logDebug('lazyload: adding property ' + requireName);
+        Object.defineProperty(object, requireName, {
+          get: function() {
+            logDebug('lazyload: requiring ' + name + '...');
+            return requireFn(name);
+          }
+        });
+      } else {
+        logDebug('requiring ' + name + '...');
+        object[requireName] = requireFn(name);
+      }
+    } catch(err){
+      logDebug('error: defineProperty ' + name);
+      throw new Error('Could not define the property \"' + requireName + '\", you may have repeated dependencies in your package.json like' + ' "gulp-' + requireName + '" and ' + '"' + requireName + '"' );
     }
   }
 
