@@ -108,6 +108,7 @@ module.exports = function(options) {
   var scopeDecomposition = new RegExp('^@(.+)/(.+)');
 
   var multimatched = multimatch(names, pattern);
+  logDebug('multimatch pattern: ' + pattern);
   logDebug('multimatched: ' + multimatched);
 
   multimatched.forEach(function(name) {
