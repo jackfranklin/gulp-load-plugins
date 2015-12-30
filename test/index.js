@@ -16,6 +16,7 @@ var gulpLoadPlugins = (function() {
   return proxyquire('../', {
     'gulp-foo': wrapInFunc({ name: 'foo' }),
     'gulp-bar': wrapInFunc({ name: 'bar' }),
+    'bar'     : wrapInFunc({ name: 'bar' }),
     'gulp-foo-bar': wrapInFunc({ name: 'foo-bar' }),
     'jack-foo': wrapInFunc({ name: 'jack-foo' }),
     'gulp-insert': {
@@ -38,6 +39,24 @@ describe('configuration', function() {
       });
     }, /Could not find dependencies. Do you have a package.json file in your project?/);
   });
+
+  it("throws a nice error if there's repeated dependencies pattern in package.json ", function() {
+    assert.throws(function(){
+       gulpLoadPlugins({
+         pattern: [
+          '*',
+          '!gulp'
+        ],
+        config: {
+          dependencies: {
+            'bar': '*',
+            "gulp-bar": "~0.0.12"
+          }
+        }  
+      });
+    }, /Could not define the property "bar", you may have repeated dependencies in your package.json like "gulp-bar" and "bar"/);
+  });
+
 });
 
 
