@@ -40,10 +40,10 @@ describe('configuration', function() {
     }, /Could not find dependencies. Do you have a package.json file in your project?/);
   });
 
-  it("throws a nice error if there's repeated dependencies pattern in package.json ", function() {
+  it("throws a nice error if there're repeated dependencies pattern in package.json ", function() {
     assert.throws(function(){
        gulpLoadPlugins({
-         pattern: [
+        pattern: [
           '*',
           '!gulp'
         ],
