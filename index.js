@@ -117,7 +117,6 @@ module.exports = function(options) {
 
       defineProperty(finalObject[decomposition[1]], getRequireName(decomposition[2]), name);
     } else {
-
       defineProperty(finalObject, getRequireName(name), name);
     }
 
