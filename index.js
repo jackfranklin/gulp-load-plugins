@@ -71,6 +71,11 @@ module.exports = function(options) {
   }
 
   function defineProperty(object, requireName, name) {
+    if(object[requireName]){
+      logDebug('error: defineProperty ' + name);
+      throw new Error('Could not define the property \"' + requireName + '\", you may have repeated dependencies in your package.json like' + ' "gulp-' + requireName + '" and ' + '"' + requireName + '"' );
+    }
+
     if(lazy) {
       logDebug('lazyload: adding property ' + requireName);
       Object.defineProperty(object, requireName, {
