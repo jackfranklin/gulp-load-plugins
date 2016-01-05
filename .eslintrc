@@ -9,7 +9,7 @@
     "before": true
   },
   "rules": {
-    "indent": [2,2],
-    "quotes": [2,"single","avoid-escape"]
+    "indent": [2, 2],
+    "quotes": [2, "single", "avoid-escape"]
   }
 }
