@@ -108,8 +108,9 @@ module.exports = function(options) {
   var scopeDecomposition = new RegExp('^@(.+)/(.+)');
 
   multimatch(names, pattern).forEach(function(name) {
+    var decomposition;
     if(scopeTest.test(name)) {
-      var decomposition = scopeDecomposition.exec(name);
+      decomposition = scopeDecomposition.exec(name);
 
       if(!finalObject.hasOwnProperty(decomposition[1])) {
         finalObject[decomposition[1]] = {};

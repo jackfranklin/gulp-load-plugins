@@ -3,7 +3,7 @@
   "version": "1.2.0",
   "description": "Automatically load any gulp plugins in your package.json",
   "scripts": {
-    "test": "NODE_PATH=test/global_modules mocha"
+    "test": "eslint **/*.js && NODE_PATH=test/global_modules mocha"
   },
   "files": [
     "index.js"
@@ -39,7 +39,7 @@
     "resolve": "^1.1.6"
   },
   "devDependencies": {
-    "jshint": "^2.5.1",
+    "eslint": "^1.10.3",
     "mocha": "^2.1.0",
     "proxyquire": "^1.0.1",
     "sinon": "^1.9.1"
