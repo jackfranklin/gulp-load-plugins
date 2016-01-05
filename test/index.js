@@ -42,7 +42,7 @@ describe('configuration', function() {
 
   it("throws a nice error if there're repeated dependencies pattern in package.json ", function() {
     assert.throws(function(){
-       gulpLoadPlugins({
+      gulpLoadPlugins({
         pattern: [
           '*',
           '!gulp'
@@ -50,7 +50,7 @@ describe('configuration', function() {
         config: {
           dependencies: {
             'bar': '*',
-            "gulp-bar": "~0.0.12"
+            'gulp-bar': '~0.0.12'
           }
         }  
       });
@@ -155,7 +155,7 @@ var commonTests = function(lazy) {
   it('supports loading scopped package', function() {
     var x = gulpLoadPlugins({
       lazy: lazy,
-      config: { dependencies: { '@myco/gulp-test-plugin': '1.0.0' } },
+      config: { dependencies: { '@myco/gulp-test-plugin': '1.0.0' } }
     });
 
     assert.deepEqual(x.myco.testPlugin(), { name: 'test' });
@@ -186,10 +186,10 @@ var commonTests = function(lazy) {
 describe('no lazy loading', function() {
   commonTests(false);
 
-  var x, spy;
+  var spy;
   before(function() {
     spy = sinon.spy();
-    x = gulpLoadPlugins({
+    gulpLoadPlugins({
       lazy: false,
       config: {
         dependencies: {
