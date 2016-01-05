@@ -106,6 +106,9 @@ Credit largely goes to @sindresorhus for his [load-grunt-plugins](https://github
 
 ## Changelog
 
+##### 1.2
+- throw an error if two packages are loaded that end up having the same name after the `replaceString` has been removed - thanks @carloshpds
+
 ##### 1.1
 - added `DEBUG` option to turn on logging and help us debug issues - thanks @dcamilleri
 
