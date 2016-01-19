@@ -79,6 +79,7 @@ module.exports = function(options) {
     if(lazy) {
       logDebug('lazyload: adding property ' + requireName);
       Object.defineProperty(object, requireName, {
+        enumerable: true,
         get: function() {
           logDebug('lazyload: requiring ' + name + '...');
           return requireFn(name);
