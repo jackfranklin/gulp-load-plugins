@@ -2,7 +2,7 @@
 
 [![npm](https://nodei.co/npm/gulp-load-plugins.svg?downloads=true)](https://nodei.co/npm/gulp-load-plugins/)
 
-> Loads in any gulp plugins and attaches them to the global scope, or an object of your choice.
+> Loads gulp plugins from package dependencies and attaches them to an object of your choice.
 
 [![Build Status](https://travis-ci.org/jackfranklin/gulp-load-plugins.svg?branch=master)](https://travis-ci.org/jackfranklin/gulp-load-plugins)
 
