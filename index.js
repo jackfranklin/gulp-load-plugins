@@ -50,7 +50,7 @@ module.exports = function(options) {
     requireFn = require;
   }
 
-  configObject = (typeof config === 'string') ? require(config) : config;
+  configObject = (typeof config === 'string') ? requireFn(config) : config;
 
   if(!configObject) {
     throw new Error('Could not find dependencies. Do you have a package.json file in your project?');
