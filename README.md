@@ -106,6 +106,9 @@ Credit largely goes to @sindresorhus for his [load-grunt-plugins](https://github
 
 ## Changelog
 
+##### 1.2.2
+- revert the previous PR in 1.2.1 which broke configuration loading for some users
+
 ##### 1.2.1
 - fix using the wrong `require` function - [PR](https://github.com/jackfranklin/gulp-load-plugins/pull/104) - thanks @mwessner
 
