@@ -6,6 +6,7 @@
     "test": "npm run lint && NODE_PATH=test/global_modules mocha",
     "lint": "eslint **/*.js"
   },
+  "license": "mit"
   "files": [
     "index.js"
   ],
