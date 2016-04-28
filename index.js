@@ -3,7 +3,7 @@ var micromatch = require('micromatch');
 var unique = require('array-unique');
 var findup = require('findup-sync');
 var resolve = require('resolve');
-var log = require('fancy-log');
+var logger = require('gulplog');
 var path = require('path');
 
 function arrayify(el) {
@@ -22,7 +22,7 @@ module.exports = function(options) {
   var requireFn;
   options = options || {};
 
-  var DEBUG = options.DEBUG || false;
+  var DEBUG = typeof options.DEBUG === 'undefined' ? true : options.DEBUG;
   var pattern = arrayify(options.pattern || ['gulp-*', 'gulp.*', '@*/gulp{-,.}*']);
   var config = options.config || findup('package.json', {cwd: parentDir});
   var scope = arrayify(options.scope || ['dependencies', 'devDependencies', 'peerDependencies']);
@@ -67,7 +67,7 @@ module.exports = function(options) {
 
   function logDebug(message) {
     if(DEBUG) {
-      log('gulp-load-plugins: ' + message);
+      logger.debug('gulp-load-plugins: ' + message);
     }
   }
 

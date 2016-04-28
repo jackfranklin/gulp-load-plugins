@@ -32,13 +32,14 @@
     "Connor Peet",
     "Dorian Camilleri",
     "Carlos Henrique",
-    "iamfrontender <iamfrontender@gmail.com>"
+    "iamfrontender <iamfrontender@gmail.com>",
+    "Brian Woodward"
   ],
   "dependencies": {
     "array-unique": "^0.2.1",
-    "fancy-log": "^1.2.0",
     "findup-sync": "^0.4.0",
     "gulp-util": "^3.0.7",
+    "gulplog": "^1.0.0",
     "micromatch": "^2.3.8",
     "resolve": "^1.1.7"
   },
