@@ -22,7 +22,7 @@ module.exports = function(options) {
   var requireFn;
   options = options || {};
 
-  var DEBUG = typeof options.DEBUG === 'undefined' ? true : options.DEBUG;
+  var DEBUG = options.DEBUG || false;
   var pattern = arrayify(options.pattern || ['gulp-*', 'gulp.*', '@*/gulp{-,.}*']);
   var config = options.config || findup('package.json', {cwd: parentDir});
   var scope = arrayify(options.scope || ['dependencies', 'devDependencies', 'peerDependencies']);

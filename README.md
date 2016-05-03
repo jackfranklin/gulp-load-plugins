@@ -58,6 +58,7 @@ You can pass in an object of options that are shown below: (the values for the k
 
 ```js
 gulpLoadPlugins({
+    DEBUG: false, // when set to true, the plugin will log info to console. Useful for bug reporting and issue debugging
     pattern: ['gulp-*', 'gulp.*'], // the glob(s) to search for
     config: 'package.json', // where to find the plugins, by default searched up from process.cwd()
     scope: ['dependencies', 'devDependencies', 'peerDependencies'], // which keys in the config to look within
@@ -65,8 +66,7 @@ gulpLoadPlugins({
     camelize: true, // if true, transforms hyphenated plugins names to camel case
     lazy: true, // whether the plugins should be lazy loaded on demand
     rename: {}, // a mapping of plugins to rename
-    renameFn: function (name) { ... }, // a function to handle the renaming of plugins (the default works)
-    DEBUG: true // when set to true and using gulp-cli flag -LLLL, the plugin will log info to console. Useful for bug reporting and issue debugging
+    renameFn: function (name) { ... } // a function to handle the renaming of plugins (the default works)
 });
 ```
 
