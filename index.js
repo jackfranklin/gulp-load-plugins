@@ -1,9 +1,10 @@
 'use strict';
-var multimatch = require('multimatch');
+var micromatch = require('micromatch');
+var unique = require('array-unique');
 var findup = require('findup-sync');
-var path = require('path');
 var resolve = require('resolve');
-var gutil = require('gulp-util');
+var logger = require('gulplog');
+var path = require('path');
 
 function arrayify(el) {
   return Array.isArray(el) ? el : [el];
@@ -66,7 +67,7 @@ module.exports = function(options) {
 
   function logDebug(message) {
     if(DEBUG) {
-      gutil.log(gutil.colors.green('gulp-load-plugins: ' + message));
+      logger.debug('gulp-load-plugins: ' + message);
     }
   }
 
@@ -108,7 +109,7 @@ module.exports = function(options) {
   var scopeTest = new RegExp('^@');
   var scopeDecomposition = new RegExp('^@(.+)/(.+)');
 
-  multimatch(names, pattern).forEach(function(name) {
+  unique(micromatch(names, pattern)).forEach(function(name) {
     var decomposition;
     if(scopeTest.test(name)) {
       decomposition = scopeDecomposition.exec(name);

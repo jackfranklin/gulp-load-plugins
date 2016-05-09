@@ -6,7 +6,7 @@
     "test": "npm run lint && NODE_PATH=test/global_modules mocha",
     "lint": "eslint **/*.js"
   },
-  "license": "mit",
+  "license": "MIT",
   "files": [
     "index.js"
   ],
@@ -32,14 +32,16 @@
     "Connor Peet",
     "Dorian Camilleri",
     "Carlos Henrique",
-    "iamfrontender <iamfrontender@gmail.com>"
+    "iamfrontender <iamfrontender@gmail.com>",
+    "Brian Woodward"
   ],
-  "license": "MIT",
   "dependencies": {
-    "findup-sync": "^0.2.1",
+    "array-unique": "^0.2.1",
+    "findup-sync": "^0.4.0",
     "gulp-util": "^3.0.7",
-    "multimatch": "2.0.0",
-    "resolve": "^1.1.6"
+    "gulplog": "^1.0.0",
+    "micromatch": "^2.3.8",
+    "resolve": "^1.1.7"
   },
   "devDependencies": {
     "eslint": "^1.10.3",
