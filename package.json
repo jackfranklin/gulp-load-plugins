@@ -37,13 +37,15 @@
   ],
   "dependencies": {
     "array-unique": "^0.2.1",
+    "fancy-log": "^1.2.0",
     "findup-sync": "^0.4.0",
-    "gulp-util": "^3.0.7",
     "gulplog": "^1.0.0",
+    "has-gulplog": "^0.1.0",
     "micromatch": "^2.3.8",
     "resolve": "^1.1.7"
   },
   "devDependencies": {
+    "capture-stream": "^0.1.2",
     "eslint": "^1.10.3",
     "mocha": "^2.1.0",
     "proxyquire": "^1.0.1",

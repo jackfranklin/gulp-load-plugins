@@ -1,6 +1,7 @@
 'use strict';
 var assert = require('assert');
 var sinon = require('sinon');
+var capture = require('capture-stream');
 
 //====================================================================
 
@@ -52,7 +53,7 @@ describe('configuration', function() {
             'bar': '*',
             'gulp-bar': '~0.0.12'
           }
-        }  
+        }
       });
     }, /Could not define the property "bar", you may have repeated dependencies in your package.json like "gulp-bar" and "bar"/);
   });
@@ -150,6 +151,27 @@ var commonTests = function(lazy) {
     });
 
     assert.deepEqual(x.bar(), { name: 'foo' });
+  });
+
+  it('outputs debug statements', function() {
+    var restore = capture(process.stdout);
+    try {
+      var x = gulpLoadPlugins({
+        lazy: lazy,
+        DEBUG: true,
+        config: { dependencies: { 'gulp-foo': '*'} }
+      });
+
+      assert.deepEqual(x.foo(), {
+        name: 'foo'
+      });
+    } catch (err) {
+      restore();
+      throw err;
+    }
+
+    var output = restore('true');
+    assert(output.indexOf('gulp-load-plugins') !== -1, 'Expected output to be logged to stdout');
   });
 
   it('supports loading scopped package', function() {
