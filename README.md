@@ -106,6 +106,9 @@ Credit largely goes to @sindresorhus for his [load-grunt-plugins](https://github
 
 ## Changelog
 
+##### 1.2.4
+- Fix bug in 1.2.3 release that stopped logging output in Gulp 3 - thanks @doowb
+
 ##### 1.2.3
 - Update dependencies in line with Gulp 4 - [PR](https://github.com/jackfranklin/gulp-load-plugins/pull/108) - thanks @doowb
 

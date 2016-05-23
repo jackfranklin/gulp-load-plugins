@@ -1,6 +1,6 @@
 {
   "name": "gulp-load-plugins",
-  "version": "1.2.3",
+  "version": "1.2.4",
   "description": "Automatically load any gulp plugins in your package.json",
   "scripts": {
     "test": "npm run lint && NODE_PATH=test/global_modules mocha",
