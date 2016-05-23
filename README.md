@@ -106,6 +106,9 @@ Credit largely goes to @sindresorhus for his [load-grunt-plugins](https://github
 
 ## Changelog
 
+##### 1.2.3
+- Update dependencies in line with Gulp 4 - [PR](https://github.com/jackfranklin/gulp-load-plugins/pull/108) - thanks @doowb
+
 ##### 1.2.2
 - revert the previous PR in 1.2.1 which broke configuration loading for some users
 
