@@ -99,6 +99,15 @@ plugins.myco.testPlugin();
 In 0.4.0 and prior, lazy loading used to only work with plugins that return a function. In newer versions though, lazy loading should work for any plugin. If you have a problem related to this please try disabling lazy loading and see if that fixes it. Feel free to open an issue on this repo too.
 
 
+## Aggressive loading
+
+use the `gulp-load-plugins/load`, it is also possible to load briefly in the [import statement](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/import).
+
+```js
+// gulpfile.babel.js
+import * as plugins from 'gulp-load-plugins/load';
+```
+
 ## Credit
 
 Credit largely goes to @sindresorhus for his [load-grunt-plugins](https://github.com/sindresorhus/load-grunt-tasks) plugin. This plugin is almost identical, just tweaked slightly to work with Gulp and to expose the required plugins.
