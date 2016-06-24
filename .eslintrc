@@ -1,5 +1,5 @@
 {
-  "extends": "eslint:recommended",
+  "extends": "standard",
   "env": {
     "node": true
   },
@@ -9,8 +9,7 @@
     "before": true
   },
   "rules": {
-    "indent": [2, 2],
-    "quotes": [2, "single", "avoid-escape"],
-    "semi": [2, "always"]
+    "semi": [2, "always"],
+    "space-before-function-paren": 0
   }
 }

@@ -2,8 +2,7 @@
 var assert = require('assert');
 var sinon = require('sinon');
 var capture = require('capture-stream');
-
-//====================================================================
+var path = require('path');
 
 var gulpLoadPlugins = (function() {
   var wrapInFunc = function(value) {
@@ -17,20 +16,18 @@ var gulpLoadPlugins = (function() {
   return proxyquire('../', {
     'gulp-foo': wrapInFunc({ name: 'foo' }),
     'gulp-bar': wrapInFunc({ name: 'bar' }),
-    'bar'     : wrapInFunc({ name: 'bar' }),
+    'bar': wrapInFunc({ name: 'bar' }),
     'gulp-foo-bar': wrapInFunc({ name: 'foo-bar' }),
     'jack-foo': wrapInFunc({ name: 'jack-foo' }),
     'gulp-insert': {
-      'append':  wrapInFunc({ name: 'insert.append' }),
-      'wrap':   wrapInFunc({ name: 'insert.wrap' })
+      'append': wrapInFunc({ name: 'insert.append' }),
+      'wrap': wrapInFunc({ name: 'insert.wrap' })
     },
     'gulp.baz': wrapInFunc({ name: 'baz' }),
     'findup-sync': function() { return null; },
     '@myco/gulp-test-plugin': wrapInFunc({ name: 'test' })
   });
 })();
-
-//====================================================================
 
 describe('configuration', function() {
   it('throws a nice error if no configuration is found', function() {
@@ -42,7 +39,7 @@ describe('configuration', function() {
   });
 
   it("throws a nice error if there're repeated dependencies pattern in package.json ", function() {
-    assert.throws(function(){
+    assert.throws(function() {
       gulpLoadPlugins({
         pattern: [
           '*',
@@ -57,9 +54,7 @@ describe('configuration', function() {
       });
     }, /Could not define the property "bar", you may have repeated dependencies in your package.json like "gulp-bar" and "bar"/);
   });
-
 });
-
 
 // Contains common tests with and without lazy mode.
 var commonTests = function(lazy) {
@@ -159,7 +154,7 @@ var commonTests = function(lazy) {
       var x = gulpLoadPlugins({
         lazy: lazy,
         DEBUG: true,
-        config: { dependencies: { 'gulp-foo': '*'} }
+        config: { dependencies: { 'gulp-foo': '*' } }
       });
 
       assert.deepEqual(x.foo(), {
@@ -262,7 +257,7 @@ describe('with lazy loading', function() {
 
 describe('common functionality', function () {
   it('throws a sensible error when not found', function () {
-    var x = gulpLoadPlugins({ config: __dirname + '/package.json' });
+    var x = gulpLoadPlugins({ config: path.join(__dirname, '/package.json') });
 
     assert.throws(function () {
       x.oops();
