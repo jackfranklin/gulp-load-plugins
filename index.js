@@ -53,6 +53,8 @@ module.exports = function(options) {
     return camelizePluginName ? camelize(name) : name;
   };
 
+  var postRequireTransforms = options.postRequireTransforms || {};
+
   if (typeof options.requireFn === 'function') {
     requireFn = options.requireFn;
   } else if (typeof config === 'string') {
@@ -86,7 +88,7 @@ module.exports = function(options) {
     }
   }
 
-  function defineProperty(object, requireName, name) {
+  function defineProperty(object, transform, requireName, name) {
     if (object[requireName]) {
       logDebug('error: defineProperty ' + name);
       throw new Error('Could not define the property "' + requireName + '", you may have repeated dependencies in your package.json like' + ' "gulp-' + requireName + '" and ' + '"' + requireName + '"');
@@ -98,12 +100,12 @@ module.exports = function(options) {
         enumerable: true,
         get: function() {
           logDebug('lazyload: requiring ' + name + '...');
-          return requireFn(name);
+          return transform(requireName, requireFn(name));
         }
       });
     } else {
       logDebug('requiring ' + name + '...');
-      object[requireName] = requireFn(name);
+      object[requireName] = transform(requireName, requireFn(name));
     }
   }
 
@@ -121,6 +123,19 @@ module.exports = function(options) {
     return requireName;
   }
 
+  function applyTransform(requireName, plugin) {
+    // var requireName = getRequireName(name);
+    var transform = postRequireTransforms[requireName];
+    // var plugin = requireFn(name);
+
+    if (transform && typeof transform === 'function') { // if postRequireTransform function is passed, pass it the plugin and return it
+      logDebug('transforming ' + requireName);
+      return transform(plugin);
+    } else {
+      return plugin; // if no postRequireTransform function passed, return the plugin as is
+    }
+  }
+
   var scopeTest = new RegExp('^@');
   var scopeDecomposition = new RegExp('^@(.+)/(.+)');
 
@@ -133,9 +148,9 @@ module.exports = function(options) {
         finalObject[decomposition[1]] = {};
       }
 
-      defineProperty(finalObject[decomposition[1]], getRequireName(decomposition[2]), name);
+      defineProperty(finalObject[decomposition[1]], applyTransform, getRequireName(decomposition[2]), name);
     } else {
-      defineProperty(finalObject, getRequireName(name), name);
+      defineProperty(finalObject, applyTransform, getRequireName(name), name);
     }
   });
 
