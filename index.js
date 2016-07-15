@@ -20,7 +20,7 @@ function camelize(str) {
 // to use the same functionality as gulp-util for backwards compatibility
 // with gulp 3x cli
 function logger() {
-  if(hasGulplog()){
+  if (hasGulplog()) {
     // specifically deferring loading here to keep from registering it globally
     var gulplog = require('gulplog');
     gulplog.info.apply(gulplog, arguments);
@@ -39,7 +39,7 @@ module.exports = function(options) {
 
   var DEBUG = options.DEBUG || false;
   var pattern = arrayify(options.pattern || ['gulp-*', 'gulp.*', '@*/gulp{-,.}*']);
-  var config = options.config || findup('package.json', {cwd: parentDir});
+  var config = options.config || findup('package.json', { cwd: parentDir });
   var scope = arrayify(options.scope || ['dependencies', 'devDependencies', 'peerDependencies']);
   var replaceString = options.replaceString || /^gulp(-|\.)/;
   var camelizePluginName = options.camelize !== false;
@@ -48,15 +48,15 @@ module.exports = function(options) {
 
   logDebug('Debug enabled with options: ' + JSON.stringify(options));
 
-  var renameFn = options.renameFn || function (name) {
+  var renameFn = options.renameFn || function(name) {
     name = name.replace(replaceString, '');
     return camelizePluginName ? camelize(name) : name;
   };
 
-  if(typeof options.requireFn === 'function') {
+  if (typeof options.requireFn === 'function') {
     requireFn = options.requireFn;
-  } else if(typeof config === 'string') {
-    requireFn = function (name) {
+  } else if (typeof config === 'string') {
+    requireFn = function(name) {
       // This searches up from the specified package.json file, making sure
       // the config option behaves as expected. See issue #56.
       var src = resolve.sync(name, { basedir: path.dirname(config) });
@@ -68,7 +68,7 @@ module.exports = function(options) {
 
   configObject = (typeof config === 'string') ? require(config) : config;
 
-  if(!configObject) {
+  if (!configObject) {
     throw new Error('Could not find dependencies. Do you have a package.json file in your project?');
   }
 
@@ -81,18 +81,18 @@ module.exports = function(options) {
   pattern.push('!gulp-load-plugins');
 
   function logDebug(message) {
-    if(DEBUG) {
+    if (DEBUG) {
       logger('gulp-load-plugins: ' + message);
     }
   }
 
   function defineProperty(object, requireName, name) {
-    if(object[requireName]){
+    if (object[requireName]) {
       logDebug('error: defineProperty ' + name);
-      throw new Error('Could not define the property \"' + requireName + '\", you may have repeated dependencies in your package.json like' + ' "gulp-' + requireName + '" and ' + '"' + requireName + '"' );
+      throw new Error('Could not define the property "' + requireName + '", you may have repeated dependencies in your package.json like' + ' "gulp-' + requireName + '" and ' + '"' + requireName + '"');
     }
 
-    if(lazy) {
+    if (lazy) {
       logDebug('lazyload: adding property ' + requireName);
       Object.defineProperty(object, requireName, {
         enumerable: true,
@@ -110,7 +110,7 @@ module.exports = function(options) {
   function getRequireName(name) {
     var requireName;
 
-    if(renameObj[name]) {
+    if (renameObj[name]) {
       requireName = options.rename[name];
     } else {
       requireName = renameFn(name);
@@ -126,10 +126,10 @@ module.exports = function(options) {
 
   unique(micromatch(names, pattern)).forEach(function(name) {
     var decomposition;
-    if(scopeTest.test(name)) {
+    if (scopeTest.test(name)) {
       decomposition = scopeDecomposition.exec(name);
 
-      if(!finalObject.hasOwnProperty(decomposition[1])) {
+      if (!finalObject.hasOwnProperty(decomposition[1])) {
         finalObject[decomposition[1]] = {};
       }
 
@@ -137,7 +137,6 @@ module.exports = function(options) {
     } else {
       defineProperty(finalObject, getRequireName(name), name);
     }
-
   });
 
   return finalObject;
