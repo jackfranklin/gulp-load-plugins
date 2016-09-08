@@ -124,9 +124,7 @@ module.exports = function(options) {
   }
 
   function applyTransform(requireName, plugin) {
-    // var requireName = getRequireName(name);
     var transform = postRequireTransforms[requireName];
-    // var plugin = requireFn(name);
 
     if (transform && typeof transform === 'function') { // if postRequireTransform function is passed, pass it the plugin and return it
       logDebug('transforming ' + requireName);
