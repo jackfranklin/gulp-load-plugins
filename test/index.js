@@ -198,6 +198,21 @@ var commonTests = function(lazy) {
       name: 'foo-bar'
     });
   });
+
+  it('supports transforming', function() {
+    var x = gulpLoadPlugins({
+      lazy: lazy,
+      config: { dependencies: { 'gulp-foo': '1.0.0' } },
+      postRequireTransforms: {
+        foo: function(foo) {
+          foo.bar = 'test string';
+          return foo;
+        }
+      }
+    });
+
+    assert.strictEqual(x.foo.bar, 'test string');
+  });
 };
 
 describe('no lazy loading', function() {
