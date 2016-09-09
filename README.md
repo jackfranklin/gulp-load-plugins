@@ -66,9 +66,40 @@ gulpLoadPlugins({
     camelize: true, // if true, transforms hyphenated plugins names to camel case
     lazy: true, // whether the plugins should be lazy loaded on demand
     rename: {}, // a mapping of plugins to rename
-    renameFn: function (name) { ... } // a function to handle the renaming of plugins (the default works)
+    renameFn: function (name) { ... }, // a function to handle the renaming of plugins (the default works)
+    postRequreTransforms: {} // see documentation below
 });
 ```
+
+## `postRequireTransforms` (1.3+ only)
+
+This enables you to transform the plugin after it has been required by gulp-load-plugins.
+
+For example, one particular plugin (let's say, `gulp-foo`), might need you to call a function to configure it before it is used. So you would end up with:
+
+```js
+var $ = require('gulp-load-plugins')();
+$.foo = $.foo.configure(...);
+```
+
+This is a bit messy. Instead you can pass a `postRequireTransforms` object which will enable you to do this:
+
+```js
+var $ = require('gulp-load-plugins')({
+  postRequireTransforms: {
+    foo: function(foo) {
+      return foo.configure(...);
+    }
+  }
+});
+
+$.foo // is already configured
+```
+
+Everytime a plugin is loaded, we check to see if a transform is defined, and if so, we call that function, passing in the loaded plugin. Whatever this function returns is then used as the value that's returned by gulp-load-plugins.
+
+For 99% of gulp-plugins you will not need this behaviour, but for the odd plugin it's a nice way of keeping your code cleaner.
+
 
 ## Renaming
 
@@ -105,6 +136,9 @@ Credit largely goes to @sindresorhus for his [load-grunt-plugins](https://github
 
 
 ## Changelog
+
+##### 1.3.0
+- added `postRequireTransforms` - thanks @vinitm - [PR](https://github.com/jackfranklin/gulp-load-plugins/pull/119)
 
 ##### 1.2.4
 - Fix bug in 1.2.3 release that stopped logging output in Gulp 3 - thanks @doowb
