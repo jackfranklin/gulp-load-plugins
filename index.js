@@ -20,7 +20,7 @@ function camelize(str) {
 // to use the same functionality as gulp-util for backwards compatibility
 // with gulp 3x cli
 function logger() {
-  if(hasGulplog()){
+  if (hasGulplog()) {
     // specifically deferring loading here to keep from registering it globally
     var gulplog = require('gulplog');
     gulplog.info.apply(gulplog, arguments);
@@ -39,7 +39,7 @@ module.exports = function(options) {
 
   var DEBUG = options.DEBUG || false;
   var pattern = arrayify(options.pattern || ['gulp-*', 'gulp.*', '@*/gulp{-,.}*']);
-  var config = options.config || findup('package.json', {cwd: parentDir});
+  var config = options.config || findup('package.json', { cwd: parentDir });
   var scope = arrayify(options.scope || ['dependencies', 'devDependencies', 'peerDependencies']);
   var replaceString = options.replaceString || /^gulp(-|\.)/;
   var camelizePluginName = options.camelize !== false;
@@ -48,15 +48,17 @@ module.exports = function(options) {
 
   logDebug('Debug enabled with options: ' + JSON.stringify(options));
 
-  var renameFn = options.renameFn || function (name) {
+  var renameFn = options.renameFn || function(name) {
     name = name.replace(replaceString, '');
     return camelizePluginName ? camelize(name) : name;
   };
 
-  if(typeof options.requireFn === 'function') {
+  var postRequireTransforms = options.postRequireTransforms || {};
+
+  if (typeof options.requireFn === 'function') {
     requireFn = options.requireFn;
-  } else if(typeof config === 'string') {
-    requireFn = function (name) {
+  } else if (typeof config === 'string') {
+    requireFn = function(name) {
       // This searches up from the specified package.json file, making sure
       // the config option behaves as expected. See issue #56.
       var src = resolve.sync(name, { basedir: path.dirname(config) });
@@ -68,7 +70,7 @@ module.exports = function(options) {
 
   configObject = (typeof config === 'string') ? require(config) : config;
 
-  if(!configObject) {
+  if (!configObject) {
     throw new Error('Could not find dependencies. Do you have a package.json file in your project?');
   }
 
@@ -81,36 +83,36 @@ module.exports = function(options) {
   pattern.push('!gulp-load-plugins');
 
   function logDebug(message) {
-    if(DEBUG) {
+    if (DEBUG) {
       logger('gulp-load-plugins: ' + message);
     }
   }
 
-  function defineProperty(object, requireName, name) {
-    if(object[requireName]){
+  function defineProperty(object, transform, requireName, name) {
+    if (object[requireName]) {
       logDebug('error: defineProperty ' + name);
-      throw new Error('Could not define the property \"' + requireName + '\", you may have repeated dependencies in your package.json like' + ' "gulp-' + requireName + '" and ' + '"' + requireName + '"' );
+      throw new Error('Could not define the property "' + requireName + '", you may have repeated dependencies in your package.json like' + ' "gulp-' + requireName + '" and ' + '"' + requireName + '"');
     }
 
-    if(lazy) {
+    if (lazy) {
       logDebug('lazyload: adding property ' + requireName);
       Object.defineProperty(object, requireName, {
         enumerable: true,
         get: function() {
           logDebug('lazyload: requiring ' + name + '...');
-          return requireFn(name);
+          return transform(requireName, requireFn(name));
         }
       });
     } else {
       logDebug('requiring ' + name + '...');
-      object[requireName] = requireFn(name);
+      object[requireName] = transform(requireName, requireFn(name));
     }
   }
 
   function getRequireName(name) {
     var requireName;
 
-    if(renameObj[name]) {
+    if (renameObj[name]) {
       requireName = options.rename[name];
     } else {
       requireName = renameFn(name);
@@ -121,23 +123,33 @@ module.exports = function(options) {
     return requireName;
   }
 
+  function applyTransform(requireName, plugin) {
+    var transform = postRequireTransforms[requireName];
+
+    if (transform && typeof transform === 'function') { // if postRequireTransform function is passed, pass it the plugin and return it
+      logDebug('transforming ' + requireName);
+      return transform(plugin);
+    } else {
+      return plugin; // if no postRequireTransform function passed, return the plugin as is
+    }
+  }
+
   var scopeTest = new RegExp('^@');
   var scopeDecomposition = new RegExp('^@(.+)/(.+)');
 
   unique(micromatch(names, pattern)).forEach(function(name) {
     var decomposition;
-    if(scopeTest.test(name)) {
+    if (scopeTest.test(name)) {
       decomposition = scopeDecomposition.exec(name);
 
-      if(!finalObject.hasOwnProperty(decomposition[1])) {
+      if (!finalObject.hasOwnProperty(decomposition[1])) {
         finalObject[decomposition[1]] = {};
       }
 
-      defineProperty(finalObject[decomposition[1]], getRequireName(decomposition[2]), name);
+      defineProperty(finalObject[decomposition[1]], applyTransform, getRequireName(decomposition[2]), name);
     } else {
-      defineProperty(finalObject, getRequireName(name), name);
+      defineProperty(finalObject, applyTransform, getRequireName(name), name);
     }
-
   });
 
   return finalObject;
