@@ -79,7 +79,6 @@ While it's possile to grab plugins from another location, often times you may wa
 var merge = require('lodash.merge');
 
 var packages = merge(
-  true,
   require('dep/package.json'),
   require('./package.json')
 );
