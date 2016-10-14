@@ -71,6 +71,50 @@ gulpLoadPlugins({
 });
 ```
 
+## Multiple `config` locations
+
+While it's possile to grab plugins from another location, often times you may want to extend from another package that enables you to keep your own `package.json` free from duplicates, but still add in your own plugins that are needed for your project. Since the `config` option accepts an object, you can merge together multiple locations by using a utility function similar to the below:
+
+```js
+/**
+ * Recursively merge properties of two objects
+ * @param  {object} obj1
+ * @param  {object} obj2
+ * @return {object} Merged obj1 and obj2
+ */
+function mergeObjects(obj1, obj2) {
+  for (let p in obj2) {
+    try {
+      // Property in destination object set; update its value.
+      if (obj2[p].constructor == Object) {
+        obj1[p] = mergeObjects(obj1[p], obj2[p]);
+      } else {
+        obj1[p] = obj2[p];
+      }
+    } catch(e) {
+      // Property in destination object not set; create it and set its value.
+      obj1[p] = obj2[p];
+    }
+  }
+  return obj1;
+}
+```
+
+Then, as you are instantiating the plugin options, you can write:
+
+```js
+const packages = mergeObjects(
+  require('dep/package.json'),
+  require('./package.json')
+);
+
+// Utilities
+const $ = gulpLoadPlugins({
+  config: packages
+});
+
+```
+
 ## `postRequireTransforms` (1.3+ only)
 
 This enables you to transform the plugin after it has been required by gulp-load-plugins.
