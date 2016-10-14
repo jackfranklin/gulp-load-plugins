@@ -76,9 +76,9 @@ gulpLoadPlugins({
 While it's possile to grab plugins from another location, often times you may want to extend from another package that enables you to keep your own `package.json` free from duplicates, but still add in your own plugins that are needed for your project. Since the `config` option accepts an object, you can merge together multiple locations using the [extend](https://www.npmjs.com/package/extend) package:
 
 ```js
-var extend = require('extend');
+var merge = require('lodash.merge');
 
-var packages = extend(
+var packages = merge(
   true,
   require('dep/package.json'),
   require('./package.json')
