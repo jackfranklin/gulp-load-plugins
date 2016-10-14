@@ -73,37 +73,13 @@ gulpLoadPlugins({
 
 ## Multiple `config` locations
 
-While it's possile to grab plugins from another location, often times you may want to extend from another package that enables you to keep your own `package.json` free from duplicates, but still add in your own plugins that are needed for your project. Since the `config` option accepts an object, you can merge together multiple locations by using a utility function similar to the below:
+While it's possile to grab plugins from another location, often times you may want to extend from another package that enables you to keep your own `package.json` free from duplicates, but still add in your own plugins that are needed for your project. Since the `config` option accepts an object, you can merge together multiple locations using the [extend](https://www.npmjs.com/package/extend) package:
 
 ```js
-/**
- * Recursively merge properties of two objects
- * @param  {object} obj1
- * @param  {object} obj2
- * @return {object} Merged obj1 and obj2
- */
-function mergeObjects(obj1, obj2) {
-  for (var p in obj2) {
-    try {
-      // Property in destination object set; update its value.
-      if (obj2[p].constructor == Object) {
-        obj1[p] = mergeObjects(obj1[p], obj2[p]);
-      } else {
-        obj1[p] = obj2[p];
-      }
-    } catch(e) {
-      // Property in destination object not set; create it and set its value.
-      obj1[p] = obj2[p];
-    }
-  }
-  return obj1;
-}
-```
+var extend = require('extend');
 
-Then, as you are instantiating the plugin options, you can write:
-
-```js
-var packages = mergeObjects(
+var packages = extend(
+  true,
   require('dep/package.json'),
   require('./package.json')
 );
