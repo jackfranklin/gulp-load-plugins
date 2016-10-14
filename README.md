@@ -83,7 +83,7 @@ While it's possile to grab plugins from another location, often times you may wa
  * @return {object} Merged obj1 and obj2
  */
 function mergeObjects(obj1, obj2) {
-  for (let p in obj2) {
+  for (var p in obj2) {
     try {
       // Property in destination object set; update its value.
       if (obj2[p].constructor == Object) {
@@ -103,13 +103,13 @@ function mergeObjects(obj1, obj2) {
 Then, as you are instantiating the plugin options, you can write:
 
 ```js
-const packages = mergeObjects(
+var packages = mergeObjects(
   require('dep/package.json'),
   require('./package.json')
 );
 
 // Utilities
-const $ = gulpLoadPlugins({
+var $ = gulpLoadPlugins({
   config: packages
 });
 
