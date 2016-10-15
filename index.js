@@ -45,6 +45,7 @@ module.exports = function(options) {
   var camelizePluginName = options.camelize !== false;
   var lazy = 'lazy' in options ? !!options.lazy : true;
   var renameObj = options.rename || {};
+  var nested = 'nested' in options ? !!options.nested : true;
 
   logDebug('Debug enabled with options: ' + JSON.stringify(options));
 
@@ -139,16 +140,19 @@ module.exports = function(options) {
 
   unique(micromatch(names, pattern)).forEach(function(name) {
     var decomposition;
+    var fObject = finalObject;
     if (scopeTest.test(name)) {
       decomposition = scopeDecomposition.exec(name);
-
-      if (!finalObject.hasOwnProperty(decomposition[1])) {
-        finalObject[decomposition[1]] = {};
+      if (nested) {
+        if (!fObject.hasOwnProperty(decomposition[1])) {
+          finalObject[decomposition[1]] = {};
+        }
+        fObject = finalObject[decomposition[1]];
       }
 
-      defineProperty(finalObject[decomposition[1]], applyTransform, getRequireName(decomposition[2]), name);
+      defineProperty(fObject, applyTransform, getRequireName(decomposition[2]), name);
     } else {
-      defineProperty(finalObject, applyTransform, getRequireName(name), name);
+      defineProperty(fObject, applyTransform, getRequireName(name), name);
     }
   });
 
