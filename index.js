@@ -45,7 +45,7 @@ module.exports = function(options) {
   var camelizePluginName = options.camelize !== false;
   var lazy = 'lazy' in options ? !!options.lazy : true;
   var renameObj = options.rename || {};
-  var nested = 'nested' in options ? !!options.nested : true;
+  var scoped = 'scoped' in options ? !!options.scoped : true;
 
   logDebug('Debug enabled with options: ' + JSON.stringify(options));
 
@@ -143,7 +143,7 @@ module.exports = function(options) {
     var fObject = finalObject;
     if (scopeTest.test(name)) {
       decomposition = scopeDecomposition.exec(name);
-      if (nested) {
+      if (scoped) {
         if (!fObject.hasOwnProperty(decomposition[1])) {
           finalObject[decomposition[1]] = {};
         }

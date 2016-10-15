@@ -169,7 +169,7 @@ var commonTests = function(lazy) {
     assert(output.indexOf('gulp-load-plugins') !== -1, 'Expected output to be logged to stdout');
   });
 
-  it('supports loading scopped package nested', function() {
+  it('supports loading scopped package as a nested reference', function() {
     var x = gulpLoadPlugins({
       lazy: lazy,
       config: { dependencies: { '@myco/gulp-test-plugin': '1.0.0' } }
@@ -178,10 +178,10 @@ var commonTests = function(lazy) {
     assert.deepEqual(x.myco.testPlugin(), { name: 'test' });
   });
 
-  it('supports loading scopped package not nested', function() {
+  it('supports loading scopped package as a top-level reference', function() {
     var x = gulpLoadPlugins({
       lazy: lazy,
-      nested: false,
+      scoped: false,
       config: { dependencies: { '@myco/gulp-test-plugin': '1.0.0' } }
     });
 
