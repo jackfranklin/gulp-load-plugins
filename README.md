@@ -71,6 +71,25 @@ gulpLoadPlugins({
 });
 ```
 
+## Multiple `config` locations
+
+While it's possile to grab plugins from another location, often times you may want to extend from another package that enables you to keep your own `package.json` free from duplicates, but still add in your own plugins that are needed for your project. Since the `config` option accepts an object, you can merge together multiple locations using the [lodash.merge](https://www.npmjs.com/package/lodash.merge) package:
+
+```js
+var merge = require('lodash.merge');
+
+var packages = merge(
+  require('dep/package.json'),
+  require('./package.json')
+);
+
+// Utilities
+var $ = gulpLoadPlugins({
+  config: packages
+});
+
+```
+
 ## `postRequireTransforms` (1.3+ only)
 
 This enables you to transform the plugin after it has been required by gulp-load-plugins.
