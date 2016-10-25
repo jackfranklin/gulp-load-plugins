@@ -181,7 +181,7 @@ var commonTests = function(lazy) {
   it('supports loading scopped package as a top-level reference', function() {
     var x = gulpLoadPlugins({
       lazy: lazy,
-      scoped: false,
+      maintainScope: false,
       config: { dependencies: { '@myco/gulp-test-plugin': '1.0.0' } }
     });
 
