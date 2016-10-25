@@ -34,7 +34,8 @@
     "Carlos Henrique",
     "iamfrontender <iamfrontender@gmail.com>",
     "Brian Woodward",
-    "Zach Schnackel <info@zslabs.com>"
+    "Zach Schnackel <info@zslabs.com>",
+    "Bret K. Ikehara <bret.k.ikehara@gmail.com>"
   ],
   "dependencies": {
     "array-unique": "^0.2.1",
