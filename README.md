@@ -68,7 +68,7 @@ gulpLoadPlugins({
     rename: {}, // a mapping of plugins to rename
     renameFn: function (name) { ... }, // a function to handle the renaming of plugins (the default works)
     postRequireTransforms: {}, // see documentation below
-    maintainScope: true // toggles loadin all npm scopes like non-scoped packages
+    maintainScope: true // toggles loading all npm scopes like non-scoped packages
 });
 ```
 
@@ -137,7 +137,7 @@ Note that if you specify the `renameFn` options with your own custom rename func
 
 ## npm Scopes
 
-`gulp-load-plugins` comes with [npm scope](https://docs.npmjs.com/misc/scope) support. By default, the scoped plugins are accessible through an object on `plugins` that represents the scope. When `maintainScope = false`, the plugins are availble in the top level just like any other non-scoped plugins.
+`gulp-load-plugins` comes with [npm scope](https://docs.npmjs.com/misc/scope) support. By default, the scoped plugins are accessible through an object on `plugins` that represents the scope. When `maintainScope = false`, the plugins are available in the top level just like any other non-scoped plugins.
 
 For example, if the plugin is `@myco/gulp-test-plugin` then you can access the plugin as shown in the following example:
 
