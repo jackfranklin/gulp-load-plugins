@@ -89,10 +89,14 @@ module.exports = function(options) {
     }
   }
 
-  function defineProperty(object, transform, requireName, name) {
+  function defineProperty(object, transform, requireName, name, maintainScope) {
+    var err;
     if (object[requireName]) {
       logDebug('error: defineProperty ' + name);
-      throw new Error('Could not define the property "' + requireName + '", you may have repeated dependencies in your package.json like' + ' "gulp-' + requireName + '" and ' + '"' + requireName + '"');
+      err = maintainScope ?
+        'Could not define the property "' + requireName + '", you may have repeated dependencies in your package.json like' + ' "gulp-' + requireName + '" and ' + '"' + requireName + '"' :
+        'Could not define the property "' + requireName + '", you may have repeated a dependency in another scope like' + ' "gulp-' + requireName + '" and ' + '"@foo/gulp-' + requireName + '"';
+      throw new Error(err);
     }
 
     if (lazy) {
@@ -150,9 +154,9 @@ module.exports = function(options) {
         fObject = finalObject[decomposition[1]];
       }
 
-      defineProperty(fObject, applyTransform, getRequireName(decomposition[2]), name);
+      defineProperty(fObject, applyTransform, getRequireName(decomposition[2]), name, maintainScope);
     } else {
-      defineProperty(fObject, applyTransform, getRequireName(name), name);
+      defineProperty(fObject, applyTransform, getRequireName(name), name, maintainScope);
     }
   });
 

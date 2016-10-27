@@ -54,6 +54,20 @@ describe('configuration', function() {
       });
     }, /Could not define the property "bar", you may have repeated dependencies in your package.json like "gulp-bar" and "bar"/);
   });
+
+  it("throws a nice error if there're repeated package names pattern in package.json ", function() {
+    assert.throws(function() {
+      gulpLoadPlugins({
+        config: {
+          dependencies: {
+            '@foo/gulp-bar': '*',
+            'gulp-bar': '~0.0.12'
+          }
+        },
+        maintainScope: false
+      });
+    }, /Could not define the property "bar", you may have repeated a dependency in another scope like "gulp-bar" and "@foo\/gulp-bar"/);
+  });
 });
 
 // Contains common tests with and without lazy mode.
