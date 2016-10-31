@@ -139,10 +139,13 @@ Note that if you specify the `renameFn` options with your own custom rename func
 
 `gulp-load-plugins` comes with [npm scope](https://docs.npmjs.com/misc/scope) support. By default, the scoped plugins are accessible through an object on `plugins` that represents the scope. When `maintainScope = false`, the plugins are available in the top level just like any other non-scoped plugins.
 
+__Note:__ `maintainScope` is only available in Version 1.4.0 and up.
+
 For example, if the plugin is `@myco/gulp-test-plugin` then you can access the plugin as shown in the following example:
 
 ```js
 var scoped = require('gulp-load-plugins')({
+  // true is the default value
   maintainScope: true,
 });
 
@@ -166,6 +169,9 @@ Credit largely goes to @sindresorhus for his [load-grunt-plugins](https://github
 
 
 ## Changelog
+
+##### 1.4.0
+- added `maintainScope` - thanks @bretkikehara - [PR](https://github.com/jackfranklin/gulp-load-plugins/pull/126)
 
 ##### 1.3.0
 - added `postRequireTransforms` - thanks @vinitm - [PR](https://github.com/jackfranklin/gulp-load-plugins/pull/119)
