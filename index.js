@@ -45,6 +45,7 @@ module.exports = function(options) {
   var camelizePluginName = options.camelize !== false;
   var lazy = 'lazy' in options ? !!options.lazy : true;
   var renameObj = options.rename || {};
+  var maintainScope = 'maintainScope' in options ? !!options.maintainScope : true;
 
   logDebug('Debug enabled with options: ' + JSON.stringify(options));
 
@@ -88,10 +89,14 @@ module.exports = function(options) {
     }
   }
 
-  function defineProperty(object, transform, requireName, name) {
+  function defineProperty(object, transform, requireName, name, maintainScope) {
+    var err;
     if (object[requireName]) {
       logDebug('error: defineProperty ' + name);
-      throw new Error('Could not define the property "' + requireName + '", you may have repeated dependencies in your package.json like' + ' "gulp-' + requireName + '" and ' + '"' + requireName + '"');
+      err = maintainScope ?
+        'Could not define the property "' + requireName + '", you may have repeated dependencies in your package.json like' + ' "gulp-' + requireName + '" and ' + '"' + requireName + '"' :
+        'Could not define the property "' + requireName + '", you may have repeated a dependency in another scope like' + ' "gulp-' + requireName + '" and ' + '"@foo/gulp-' + requireName + '"';
+      throw new Error(err);
     }
 
     if (lazy) {
@@ -139,16 +144,19 @@ module.exports = function(options) {
 
   unique(micromatch(names, pattern)).forEach(function(name) {
     var decomposition;
+    var fObject = finalObject;
     if (scopeTest.test(name)) {
       decomposition = scopeDecomposition.exec(name);
-
-      if (!finalObject.hasOwnProperty(decomposition[1])) {
-        finalObject[decomposition[1]] = {};
+      if (maintainScope) {
+        if (!fObject.hasOwnProperty(decomposition[1])) {
+          finalObject[decomposition[1]] = {};
+        }
+        fObject = finalObject[decomposition[1]];
       }
 
-      defineProperty(finalObject[decomposition[1]], applyTransform, getRequireName(decomposition[2]), name);
+      defineProperty(fObject, applyTransform, getRequireName(decomposition[2]), name, maintainScope);
     } else {
-      defineProperty(finalObject, applyTransform, getRequireName(name), name);
+      defineProperty(fObject, applyTransform, getRequireName(name), name, maintainScope);
     }
   });
 

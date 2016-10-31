@@ -54,6 +54,20 @@ describe('configuration', function() {
       });
     }, /Could not define the property "bar", you may have repeated dependencies in your package.json like "gulp-bar" and "bar"/);
   });
+
+  it("throws a nice error if there're repeated package names pattern in package.json ", function() {
+    assert.throws(function() {
+      gulpLoadPlugins({
+        config: {
+          dependencies: {
+            '@foo/gulp-bar': '*',
+            'gulp-bar': '~0.0.12'
+          }
+        },
+        maintainScope: false
+      });
+    }, /Could not define the property "bar", you may have repeated a dependency in another scope like "gulp-bar" and "@foo\/gulp-bar"/);
+  });
 });
 
 // Contains common tests with and without lazy mode.
@@ -169,13 +183,23 @@ var commonTests = function(lazy) {
     assert(output.indexOf('gulp-load-plugins') !== -1, 'Expected output to be logged to stdout');
   });
 
-  it('supports loading scopped package', function() {
+  it('supports loading scopped package as a nested reference', function() {
     var x = gulpLoadPlugins({
       lazy: lazy,
       config: { dependencies: { '@myco/gulp-test-plugin': '1.0.0' } }
     });
 
     assert.deepEqual(x.myco.testPlugin(), { name: 'test' });
+  });
+
+  it('supports loading scopped package as a top-level reference', function() {
+    var x = gulpLoadPlugins({
+      lazy: lazy,
+      maintainScope: false,
+      config: { dependencies: { '@myco/gulp-test-plugin': '1.0.0' } }
+    });
+
+    assert.deepEqual(x.testPlugin(), { name: 'test' });
   });
 
   it('supports custom rename functions', function () {
