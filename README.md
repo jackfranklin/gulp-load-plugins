@@ -59,7 +59,8 @@ You can pass in an object of options that are shown below: (the values for the k
 ```js
 gulpLoadPlugins({
     DEBUG: false, // when set to true, the plugin will log info to console. Useful for bug reporting and issue debugging
-    pattern: ['gulp-*', 'gulp.*'], // the glob(s) to search for
+    pattern: ['gulp-*', 'gulp.*', '@*/gulp{-,.}*'], // the glob(s) to search for
+    overridePattern: true, // When true, overrides the built-in patterns. Otherwise, extends built-in patterns matcher list.
     config: 'package.json', // where to find the plugins, by default searched up from process.cwd()
     scope: ['dependencies', 'devDependencies', 'peerDependencies'], // which keys in the config to look within
     replaceString: /^gulp(-|\.)/, // what to remove from the name of the module when adding it to the context
@@ -162,6 +163,23 @@ nonScoped.testPlugin();
 
 In 0.4.0 and prior, lazy loading used to only work with plugins that return a function. In newer versions though, lazy loading should work for any plugin. If you have a problem related to this please try disabling lazy loading and see if that fixes it. Feel free to open an issue on this repo too.
 
+## Override Pattern
+
+In 1.4.0 and prior, configuring the `pattern` option would override the built-in `['gulp-*', 'gulp.*', '@*/gulp{-,.}*']`. If `overridePattern: false`, the configured `pattern` will now extends the built-in matching.
+
+For example, both are equivilant statements.
+```js
+var overridePlugins = require('gulp-load-plugins')({
+  // true is the default value
+  overridePattern: true,
+  pattern: ['gulp-*', 'gulp.*', '@*/gulp{-,.}*', 'foo-bar']
+});
+
+var extendedPlugins = require('gulp-load-plugins')({
+  overridePattern: false,
+  pattern: ['foo-bar']
+});
+```
 
 ## Credit
 

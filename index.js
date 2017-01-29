@@ -31,6 +31,15 @@ function logger() {
   }
 }
 
+function getPattern(options) {
+  var defaultPatterns = ['gulp-*', 'gulp.*', '@*/gulp{-,.}*'];
+  var overridePattern = 'overridePattern' in options ? !!options.overridePattern : true;
+  if (overridePattern) {
+    return arrayify(options.pattern || defaultPatterns);
+  }
+  return defaultPatterns.concat(arrayify(options.pattern));
+}
+
 module.exports = function(options) {
   var finalObject = {};
   var configObject;
@@ -38,7 +47,7 @@ module.exports = function(options) {
   options = options || {};
 
   var DEBUG = options.DEBUG || false;
-  var pattern = arrayify(options.pattern || ['gulp-*', 'gulp.*', '@*/gulp{-,.}*']);
+  var pattern = getPattern(options);
   var config = options.config || findup('package.json', { cwd: parentDir });
   var scope = arrayify(options.scope || ['dependencies', 'devDependencies', 'peerDependencies']);
   var replaceString = options.replaceString || /^gulp(-|\.)/;
