@@ -188,6 +188,9 @@ Credit largely goes to @sindresorhus for his [load-grunt-plugins](https://github
 
 ## Changelog
 
+##### 1.5.0
+- added `overridePattern` - thanks @bretkikehara - [PR](https://github.com/jackfranklin/gulp-load-plugins/pull/127)
+
 ##### 1.4.0
 - added `maintainScope` - thanks @bretkikehara - [PR](https://github.com/jackfranklin/gulp-load-plugins/pull/126)
 
