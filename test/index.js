@@ -121,6 +121,25 @@ var commonTests = function(lazy) {
     assert(!x.bar);
   });
 
+  it('can extend the patterns', function() {
+    var x = gulpLoadPlugins({
+      lazy: lazy,
+      config: {
+        dependencies: {
+          'jack-foo': '1.0.0',
+          'gulp-bar': '*'
+        }
+      },
+      overridePattern: false,
+      pattern: 'jack-*'
+    });
+
+    assert.deepEqual(x.jackFoo(), {
+      name: 'jack-foo'
+    });
+    assert(x.bar);
+  });
+
   it('allows camelizing to be turned off', function() {
     var x = gulpLoadPlugins({
       lazy: lazy,
