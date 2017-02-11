@@ -181,6 +181,15 @@ var extendedPlugins = require('gulp-load-plugins')({
 });
 ```
 
+## Aggressive loading
+
+use the `gulp-load-plugins/load`, it is also possible to load briefly in the [import statement](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/import).
+
+```js
+// gulpfile.babel.js
+import * as plugins from 'gulp-load-plugins/load';
+```
+
 ## Credit
 
 Credit largely goes to @sindresorhus for his [load-grunt-plugins](https://github.com/sindresorhus/load-grunt-tasks) plugin. This plugin is almost identical, just tweaked slightly to work with Gulp and to expose the required plugins.

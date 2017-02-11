@@ -326,4 +326,9 @@ describe('common functionality', function () {
     var plugins = require('../')();
     assert.ok(typeof plugins.test === 'function');
   });
+
+  it('allows directly load in a lower directory', function() {
+    var plugins = require('../load');
+    assert.ok(typeof plugins.test === 'function');
+  });
 });
