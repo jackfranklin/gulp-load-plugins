@@ -1,5 +1,5 @@
 'use strict';
-var hasGulplog = require('has-gulplog');
+
 var micromatch = require('micromatch');
 var unique = require('array-unique');
 var findup = require('findup-sync');
@@ -14,21 +14,6 @@ function camelize(str) {
   return str.replace(/-(\w)/g, function(m, p1) {
     return p1.toUpperCase();
   });
-}
-
-// code from https://github.com/gulpjs/gulp-util/blob/master/lib/log.js
-// to use the same functionality as gulp-util for backwards compatibility
-// with gulp 3x cli
-function logger() {
-  if (hasGulplog()) {
-    // specifically deferring loading here to keep from registering it globally
-    var gulplog = require('gulplog');
-    gulplog.info.apply(gulplog, arguments);
-  } else {
-    // specifically defering loading because it might not be used
-    var fancylog = require('fancy-log');
-    fancylog.apply(null, arguments);
-  }
 }
 
 function getPattern(options) {
@@ -55,6 +40,15 @@ module.exports = function(options) {
   var lazy = 'lazy' in options ? !!options.lazy : true;
   var renameObj = options.rename || {};
   var maintainScope = 'maintainScope' in options ? !!options.maintainScope : true;
+  var logDebug = (function() {
+    if (!DEBUG) return function(message) { /* noop */ };
+
+    var log = require('has-gulplog')() ? require('gulplog') : {info: require('fancy-log')};
+
+    return function(message) {
+      log.info('gulp-load-plugins: ' + message);
+    };
+  })();
 
   logDebug('Debug enabled with options: ' + JSON.stringify(options));
 
@@ -91,12 +85,6 @@ module.exports = function(options) {
   logDebug(names.length + ' plugin(s) found: ' + names.join(' '));
 
   pattern.push('!gulp-load-plugins');
-
-  function logDebug(message) {
-    if (DEBUG) {
-      logger('gulp-load-plugins: ' + message);
-    }
-  }
 
   function defineProperty(object, transform, requireName, name, maintainScope) {
     var err;
