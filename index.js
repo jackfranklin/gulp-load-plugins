@@ -102,9 +102,9 @@ module.exports = function(options) {
     var err;
     if (object[requireName]) {
       logDebug('error: defineProperty ' + name);
-      err = maintainScope ?
-        'Could not define the property "' + requireName + '", you may have repeated dependencies in your package.json like' + ' "gulp-' + requireName + '" and ' + '"' + requireName + '"' :
-        'Could not define the property "' + requireName + '", you may have repeated a dependency in another scope like' + ' "gulp-' + requireName + '" and ' + '"@foo/gulp-' + requireName + '"';
+      err = maintainScope
+        ? 'Could not define the property "' + requireName + '", you may have repeated dependencies in your package.json like' + ' "gulp-' + requireName + '" and ' + '"' + requireName + '"'
+        : 'Could not define the property "' + requireName + '", you may have repeated a dependency in another scope like' + ' "gulp-' + requireName + '" and ' + '"@foo/gulp-' + requireName + '"';
       throw new Error(err);
     }
 
