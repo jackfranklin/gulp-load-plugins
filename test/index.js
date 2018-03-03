@@ -1,17 +1,17 @@
 'use strict';
-var assert = require('assert');
-var sinon = require('sinon');
-var capture = require('capture-stream');
-var path = require('path');
+const assert = require('assert');
+const sinon = require('sinon');
+const capture = require('capture-stream');
+const path = require('path');
 
-var gulpLoadPlugins = (function() {
-  var wrapInFunc = function(value) {
+const gulpLoadPlugins = (function() {
+  const wrapInFunc = function(value) {
     return function() {
       return value;
     };
   };
 
-  var proxyquire = require('proxyquire').noCallThru();
+  const proxyquire = require('proxyquire').noCallThru();
 
   return proxyquire('../', {
     'gulp-foo': wrapInFunc({ name: 'foo' }),
@@ -71,9 +71,9 @@ describe('configuration', function() {
 });
 
 // Contains common tests with and without lazy mode.
-var commonTests = function(lazy) {
+const commonTests = function(lazy) {
   it('loads things in', function() {
-    var x = gulpLoadPlugins({
+    const x = gulpLoadPlugins({
       lazy: lazy,
       config: {
         dependencies: {
@@ -103,7 +103,7 @@ var commonTests = function(lazy) {
   });
 
   it('can take a pattern override', function() {
-    var x = gulpLoadPlugins({
+    const x = gulpLoadPlugins({
       lazy: lazy,
       pattern: 'jack-*',
       replaceString: 'jack-',
@@ -122,7 +122,7 @@ var commonTests = function(lazy) {
   });
 
   it('can extend the patterns', function() {
-    var x = gulpLoadPlugins({
+    const x = gulpLoadPlugins({
       lazy: lazy,
       config: {
         dependencies: {
@@ -141,7 +141,7 @@ var commonTests = function(lazy) {
   });
 
   it('allows camelizing to be turned off', function() {
-    var x = gulpLoadPlugins({
+    const x = gulpLoadPlugins({
       lazy: lazy,
       camelize: false,
       config: {
@@ -157,7 +157,7 @@ var commonTests = function(lazy) {
   });
 
   it('camelizes plugins name by default', function() {
-    var x = gulpLoadPlugins({
+    const x = gulpLoadPlugins({
       lazy: lazy,
       config: {
         dependencies: {
@@ -172,7 +172,7 @@ var commonTests = function(lazy) {
   });
 
   it('lets something be completely renamed', function() {
-    var x = gulpLoadPlugins({
+    const x = gulpLoadPlugins({
       lazy: lazy,
       config: { dependencies: { 'gulp-foo': '1.0.0' } },
       rename: { 'gulp-foo': 'bar' }
@@ -182,9 +182,9 @@ var commonTests = function(lazy) {
   });
 
   it('outputs debug statements', function() {
-    var restore = capture(process.stdout);
+    const restore = capture(process.stdout);
     try {
-      var x = gulpLoadPlugins({
+      const x = gulpLoadPlugins({
         lazy: lazy,
         DEBUG: true,
         config: { dependencies: { 'gulp-foo': '*' } }
@@ -198,12 +198,12 @@ var commonTests = function(lazy) {
       throw err;
     }
 
-    var output = restore('true');
+    const output = restore('true');
     assert(output.indexOf('gulp-load-plugins') !== -1, 'Expected output to be logged to stdout');
   });
 
   it('supports loading scopped package as a nested reference', function() {
-    var x = gulpLoadPlugins({
+    const x = gulpLoadPlugins({
       lazy: lazy,
       config: { dependencies: { '@myco/gulp-test-plugin': '1.0.0' } }
     });
@@ -212,7 +212,7 @@ var commonTests = function(lazy) {
   });
 
   it('supports loading scopped package as a top-level reference', function() {
-    var x = gulpLoadPlugins({
+    const x = gulpLoadPlugins({
       lazy: lazy,
       maintainScope: false,
       config: { dependencies: { '@myco/gulp-test-plugin': '1.0.0' } }
@@ -222,7 +222,7 @@ var commonTests = function(lazy) {
   });
 
   it('supports custom rename functions', function () {
-    var x = gulpLoadPlugins({
+    const x = gulpLoadPlugins({
       renameFn: function () {
         return 'baz';
       },
@@ -243,7 +243,7 @@ var commonTests = function(lazy) {
   });
 
   it('supports transforming', function() {
-    var x = gulpLoadPlugins({
+    const x = gulpLoadPlugins({
       lazy: lazy,
       config: { dependencies: { 'gulp-foo': '1.0.0' } },
       postRequireTransforms: {
@@ -261,7 +261,7 @@ var commonTests = function(lazy) {
 describe('no lazy loading', function() {
   commonTests(false);
 
-  var spy;
+  let spy;
   before(function() {
     spy = sinon.spy();
     gulpLoadPlugins({
@@ -286,7 +286,7 @@ describe('no lazy loading', function() {
 describe('with lazy loading', function() {
   commonTests(true);
 
-  var x, spy;
+  let x, spy;
   before(function() {
     spy = sinon.spy();
     x = gulpLoadPlugins({
@@ -315,7 +315,7 @@ describe('with lazy loading', function() {
 
 describe('common functionality', function () {
   it('throws a sensible error when not found', function () {
-    var x = gulpLoadPlugins({ config: path.join(__dirname, '/package.json') });
+    const x = gulpLoadPlugins({ config: path.join(__dirname, '/package.json') });
 
     assert.throws(function () {
       x.oops();
@@ -323,7 +323,7 @@ describe('common functionality', function () {
   });
 
   it('allows you to use in a lower directory', function() {
-    var plugins = require('../')();
+    const plugins = require('../')();
     assert.ok(typeof plugins.test === 'function');
   });
 });
