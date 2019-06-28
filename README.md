@@ -1,5 +1,9 @@
 # gulp-load-plugins
 
+# Maintainers wanted!
+
+I no longer use Gulp and therefore I'm not able to maintain this plugin as well as I'd like. If you would like to, please get in touch on Twitter (@Jack_Franklin).
+
 [![npm](https://nodei.co/npm/gulp-load-plugins.svg?downloads=true)](https://nodei.co/npm/gulp-load-plugins/)
 
 > Loads gulp plugins from package dependencies and attaches them to an object of your choice.
@@ -187,6 +191,9 @@ Credit largely goes to @sindresorhus for his [load-grunt-plugins](https://github
 
 
 ## Changelog
+
+##### 1.6.0
+- Bump some dependencies that had security vulnerabilities - thanks @tombye - [PR](https://github.com/jackfranklin/gulp-load-plugins/pull/138)
 
 ##### 1.5.0
 - added `overridePattern` - thanks @bretkikehara - [PR](https://github.com/jackfranklin/gulp-load-plugins/pull/127)
