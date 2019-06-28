@@ -10,6 +10,9 @@
   "files": [
     "index.js"
   ],
+  "engines": {
+		"node": ">=4"
+  },
   "repository": "jackfranklin/gulp-load-plugins",
   "keywords": [
     "gulpfriendly",
