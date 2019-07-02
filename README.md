@@ -35,15 +35,16 @@ Given a `package.json` file that has some dependencies within:
 Adding this into your `Gulpfile.js`:
 
 ```js
-var gulp = require('gulp');
-var gulpLoadPlugins = require('gulp-load-plugins');
-var plugins = gulpLoadPlugins();
+const gulp = require('gulp');
+const gulpLoadPlugins = require('gulp-load-plugins');
+const plugins = gulpLoadPlugins();
 ```
 
 Or, even shorter:
 
 ```js
-var plugins = require('gulp-load-plugins')();
+const gulp = require('gulp');
+const plugins = require('gulp-load-plugins')();
 ```
 
 Will result in the following happening (roughly, plugins are lazy loaded but in practice you won't notice any difference):
@@ -83,15 +84,15 @@ gulpLoadPlugins({
 While it's possile to grab plugins from another location, often times you may want to extend from another package that enables you to keep your own `package.json` free from duplicates, but still add in your own plugins that are needed for your project. Since the `config` option accepts an object, you can merge together multiple locations using the [lodash.merge](https://www.npmjs.com/package/lodash.merge) package:
 
 ```js
-var merge = require('lodash.merge');
+const merge = require('lodash.merge');
 
-var packages = merge(
+const packages = merge(
   require('dep/package.json'),
   require('./package.json')
 );
 
 // Utilities
-var $ = gulpLoadPlugins({
+const $ = gulpLoadPlugins({
   config: packages
 });
 
@@ -104,14 +105,14 @@ This enables you to transform the plugin after it has been required by gulp-load
 For example, one particular plugin (let's say, `gulp-foo`), might need you to call a function to configure it before it is used. So you would end up with:
 
 ```js
-var $ = require('gulp-load-plugins')();
+const $ = require('gulp-load-plugins')();
 $.foo = $.foo.configure(...);
 ```
 
 This is a bit messy. Instead you can pass a `postRequireTransforms` object which will enable you to do this:
 
 ```js
-var $ = require('gulp-load-plugins')({
+const $ = require('gulp-load-plugins')({
   postRequireTransforms: {
     foo: function(foo) {
       return foo.configure(...);
@@ -150,14 +151,14 @@ __Note:__ `maintainScope` is only available in Version 1.4.0 and up.
 For example, if the plugin is `@myco/gulp-test-plugin` then you can access the plugin as shown in the following example:
 
 ```js
-var scoped = require('gulp-load-plugins')({
+const scoped = require('gulp-load-plugins')({
   // true is the default value
   maintainScope: true,
 });
 
 scoped.myco.testPlugin();
 
-var nonScoped = require('gulp-load-plugins')({
+const nonScoped = require('gulp-load-plugins')({
   maintainScope: false,
 });
 
@@ -174,13 +175,13 @@ In 1.4.0 and prior, configuring the `pattern` option would override the built-in
 
 For example, both are equivilant statements.
 ```js
-var overridePlugins = require('gulp-load-plugins')({
+const overridePlugins = require('gulp-load-plugins')({
   // true is the default value
   overridePattern: true,
   pattern: ['gulp-*', 'gulp.*', '@*/gulp{-,.}*', 'foo-bar']
 });
 
-var extendedPlugins = require('gulp-load-plugins')({
+const extendedPlugins = require('gulp-load-plugins')({
   overridePattern: false,
   pattern: ['foo-bar']
 });
