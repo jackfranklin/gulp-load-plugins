@@ -194,6 +194,9 @@ Credit largely goes to @sindresorhus for his [load-grunt-plugins](https://github
 
 ## Changelog
 
+##### 2.0.0
+- Drop support for old Node. Minimum version now Noda >= 8. Update all dependencies. Refactor some code with ES6. - thanks @TheDancingCode - [PR](https://github.com/jackfranklin/gulp-load-plugins/pull/134)
+
 ##### 1.6.0
 - Bump some dependencies that had security vulnerabilities - thanks @tombye - [PR](https://github.com/jackfranklin/gulp-load-plugins/pull/138)
 
