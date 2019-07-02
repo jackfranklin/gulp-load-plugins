@@ -23,7 +23,7 @@ function logger() {
     const gulplog = require('gulplog');
     gulplog.info.apply(gulplog, arguments);
   } else {
-    // specifically defering loading because it might not be used
+    // specifically deferring loading because it might not be used
     const fancylog = require('fancy-log');
     fancylog.apply(null, arguments);
   }

@@ -85,19 +85,19 @@ const commonTests = function(lazy) {
       }
     });
 
-    assert.deepEqual(x.foo(), {
+    assert.deepStrictEqual(x.foo(), {
       name: 'foo'
     });
-    assert.deepEqual(x.bar(), {
+    assert.deepStrictEqual(x.bar(), {
       name: 'bar'
     });
-    assert.deepEqual(x.baz(), {
+    assert.deepStrictEqual(x.baz(), {
       name: 'baz'
     });
-    assert.deepEqual(x.insert.wrap(), {
+    assert.deepStrictEqual(x.insert.wrap(), {
       name: 'insert.wrap'
     });
-    assert.deepEqual(x.insert.append(), {
+    assert.deepStrictEqual(x.insert.append(), {
       name: 'insert.append'
     });
   });
@@ -115,7 +115,7 @@ const commonTests = function(lazy) {
       }
     });
 
-    assert.deepEqual(x.foo(), {
+    assert.deepStrictEqual(x.foo(), {
       name: 'jack-foo'
     });
     assert(!x.bar);
@@ -134,7 +134,7 @@ const commonTests = function(lazy) {
       pattern: 'jack-*'
     });
 
-    assert.deepEqual(x.jackFoo(), {
+    assert.deepStrictEqual(x.jackFoo(), {
       name: 'jack-foo'
     });
     assert(x.bar);
@@ -151,7 +151,7 @@ const commonTests = function(lazy) {
       }
     });
 
-    assert.deepEqual(x['foo-bar'](), {
+    assert.deepStrictEqual(x['foo-bar'](), {
       name: 'foo-bar'
     });
   });
@@ -166,7 +166,7 @@ const commonTests = function(lazy) {
       }
     });
 
-    assert.deepEqual(x.fooBar(), {
+    assert.deepStrictEqual(x.fooBar(), {
       name: 'foo-bar'
     });
   });
@@ -178,7 +178,7 @@ const commonTests = function(lazy) {
       rename: { 'gulp-foo': 'bar' }
     });
 
-    assert.deepEqual(x.bar(), { name: 'foo' });
+    assert.deepStrictEqual(x.bar(), { name: 'foo' });
   });
 
   it('outputs debug statements', function() {
@@ -190,7 +190,7 @@ const commonTests = function(lazy) {
         config: { dependencies: { 'gulp-foo': '*' } }
       });
 
-      assert.deepEqual(x.foo(), {
+      assert.deepStrictEqual(x.foo(), {
         name: 'foo'
       });
     } catch (err) {
@@ -208,7 +208,7 @@ const commonTests = function(lazy) {
       config: { dependencies: { '@myco/gulp-test-plugin': '1.0.0' } }
     });
 
-    assert.deepEqual(x.myco.testPlugin(), { name: 'test' });
+    assert.deepStrictEqual(x.myco.testPlugin(), { name: 'test' });
   });
 
   it('supports loading scopped package as a top-level reference', function() {
@@ -218,7 +218,7 @@ const commonTests = function(lazy) {
       config: { dependencies: { '@myco/gulp-test-plugin': '1.0.0' } }
     });
 
-    assert.deepEqual(x.testPlugin(), { name: 'test' });
+    assert.deepStrictEqual(x.testPlugin(), { name: 'test' });
   });
 
   it('supports custom rename functions', function () {
@@ -237,7 +237,7 @@ const commonTests = function(lazy) {
       x.fooBar();
     });
 
-    assert.deepEqual(x.baz(), {
+    assert.deepStrictEqual(x.baz(), {
       name: 'foo-bar'
     });
   });
