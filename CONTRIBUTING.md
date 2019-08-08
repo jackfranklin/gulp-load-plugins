@@ -2,7 +2,7 @@
 
 Firstly, contributions are hugely welcomed and much appreciated!
 
-__If you've never contributed to an open source project before, please don't let that put you off!__ I am more than happy to help with PRs, etc, please ping me on GitHub or email jack at jackfranklin dot net.
+__If you've never contributed to an open source project before, please don't let that put you off!__ I am more than happy to help with PRs, etc, please ping [me](https://github.com/jackfranklin) or [Jameel](https://github.com/jameelmoses) on GitHub.
 
 ### Working on an issue
 
@@ -18,4 +18,3 @@ Before you start working on an idea, make sure:
 - Be sure to add yourself as a contributor to the [package.json](https://github.com/jackfranklin/gulp-load-plugins/blob/master/package.json) file.
 - If possible, write a test that covers the bug fix / feature addition that you're making. If you're unsure how to write the test, open your PR first and someone will help you.
 - If you have any questions at all, please don't hesitate to get in touch. We're here to help :)
-

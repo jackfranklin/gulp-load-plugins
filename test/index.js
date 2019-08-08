@@ -1,3 +1,5 @@
+/* eslint-disable quote-props */
+
 'use strict';
 const assert = require('assert');
 const sinon = require('sinon');

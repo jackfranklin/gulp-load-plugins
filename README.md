@@ -14,8 +14,16 @@ Due to the native support of ES2015 syntax in newer versions of Node, this plugi
 
 ## Install
 
+NPM:
+
 ```sh
 $ npm install --save-dev gulp-load-plugins
+```
+
+Yarn:
+
+```sh
+$ yarn add -D gulp-load-plugins
 ```
 
 
@@ -193,6 +201,9 @@ Credit largely goes to @sindresorhus for his [load-grunt-plugins](https://github
 
 
 ## Changelog
+
+##### 2.0.1
+- Update dependencies and minor JS improvements
 
 ##### 2.0.0
 - Drop support for old Node. Minimum version now Noda >= 8. Update all dependencies. Refactor some code with ES6. - thanks @TheDancingCode - [PR](https://github.com/jackfranklin/gulp-load-plugins/pull/134)

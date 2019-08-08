@@ -40,7 +40,6 @@ function getPattern(options) {
 
 module.exports = function(options) {
   const finalObject = {};
-  let configObject;
   let requireFn;
   options = options || {};
 
@@ -76,7 +75,7 @@ module.exports = function(options) {
     requireFn = require;
   }
 
-  configObject = (typeof config === 'string') ? require(config) : config;
+  const configObject = (typeof config === 'string') ? require(config) : config;
 
   if (!configObject) {
     throw new Error('Could not find dependencies. Do you have a package.json file in your project?');
@@ -153,7 +152,7 @@ module.exports = function(options) {
     if (scopeTest.test(name)) {
       decomposition = scopeDecomposition.exec(name);
       if (maintainScope) {
-        if (!fObject.hasOwnProperty(decomposition[1])) {
+        if (!Object.prototype.hasOwnProperty.call(fObject, decomposition[1])) {
           finalObject[decomposition[1]] = {};
         }
         fObject = finalObject[decomposition[1]];

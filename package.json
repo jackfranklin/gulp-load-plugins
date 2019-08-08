@@ -1,6 +1,6 @@
 {
   "name": "gulp-load-plugins",
-  "version": "2.0.0",
+  "version": "2.0.1",
   "description": "Automatically load any gulp plugins in your package.json",
   "scripts": {
     "test": "npm run lint && NODE_PATH=test/global_modules mocha",
@@ -44,22 +44,22 @@
   "dependencies": {
     "array-unique": "^0.3.2",
     "fancy-log": "^1.2.0",
-    "findup-sync": "^3.0.0",
+    "findup-sync": "^4.0.0",
     "gulplog": "^1.0.0",
     "has-gulplog": "^0.1.0",
     "micromatch": "^4.0.2",
-    "resolve": "^1.1.7"
+    "resolve": "^1.12.0"
   },
   "devDependencies": {
     "capture-stream": "^0.1.2",
-    "eslint": "^6.0.1",
-    "eslint-config-standard": "^12.0.0",
-    "eslint-plugin-import": "^2.18.0",
+    "eslint": "^6.1.0",
+    "eslint-config-standard": "^13.0.1",
+    "eslint-plugin-import": "^2.18.2",
     "eslint-plugin-node": "^9.1.0",
     "eslint-plugin-promise": "^4.2.1",
     "eslint-plugin-standard": "^4.0.0",
-    "mocha": "^6.1.4",
-    "proxyquire": "^2.1.0",
-    "sinon": "^7.3.2"
+    "mocha": "^6.2.0",
+    "proxyquire": "^2.1.1",
+    "sinon": "^7.4.1"
   }
 }
