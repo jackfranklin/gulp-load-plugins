@@ -202,6 +202,9 @@ Credit largely goes to @sindresorhus for his [load-grunt-plugins](https://github
 
 ## Changelog
 
+##### 2.0.2
+- Update dependencies
+
 ##### 2.0.1
 - Update dependencies and minor JS improvements
 
