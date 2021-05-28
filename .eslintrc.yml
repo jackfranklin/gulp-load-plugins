@@ -1,0 +1,12 @@
+extends: standard
+env:
+  node: true
+globals:
+  describe: true
+  it: true
+  before: true
+rules:
+  semi:
+  - 2
+  - always
+  space-before-function-paren: 0

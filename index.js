@@ -143,8 +143,8 @@ module.exports = function(options) {
     }
   }
 
-  const scopeTest = new RegExp('^@');
-  const scopeDecomposition = new RegExp('^@(.+)/(.+)');
+  const scopeTest = /^@/;
+  const scopeDecomposition = /^@(.+)\/(.+)/;
 
   unique(micromatch(names, pattern)).forEach((name) => {
     let decomposition;

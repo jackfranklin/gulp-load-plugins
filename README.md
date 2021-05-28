@@ -202,6 +202,9 @@ Credit largely goes to @sindresorhus for his [load-grunt-plugins](https://github
 
 ## Changelog
 
+##### 2.0.7
+- Update dependencies
+
 ##### 2.0.6
 - Update dependencies and add power support for Travis on ppc64le - thanks @dineshks1 - [PR](https://github.com/jackfranklin/gulp-load-plugins/pull/140)
 
