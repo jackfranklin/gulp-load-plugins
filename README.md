@@ -202,6 +202,10 @@ Credit largely goes to @sindresorhus for his [load-grunt-plugins](https://github
 
 ## Changelog
 
+##### 2.0.8
+- Fixes #141 - module.parent deprecated in Node 14+. Thanks @DaveyJake
+- Update dependencies
+
 ##### 2.0.7
 - Update dependencies
 

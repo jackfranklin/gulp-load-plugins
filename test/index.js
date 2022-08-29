@@ -76,7 +76,7 @@ describe('configuration', function() {
 const commonTests = function(lazy) {
   it('loads things in', function() {
     const x = gulpLoadPlugins({
-      lazy: lazy,
+      lazy,
       config: {
         dependencies: {
           'gulp-foo': '1.0.0',
@@ -106,7 +106,7 @@ const commonTests = function(lazy) {
 
   it('can take a pattern override', function() {
     const x = gulpLoadPlugins({
-      lazy: lazy,
+      lazy,
       pattern: 'jack-*',
       replaceString: 'jack-',
       config: {
@@ -125,7 +125,7 @@ const commonTests = function(lazy) {
 
   it('can extend the patterns', function() {
     const x = gulpLoadPlugins({
-      lazy: lazy,
+      lazy,
       config: {
         dependencies: {
           'jack-foo': '1.0.0',
@@ -144,7 +144,7 @@ const commonTests = function(lazy) {
 
   it('allows camelizing to be turned off', function() {
     const x = gulpLoadPlugins({
-      lazy: lazy,
+      lazy,
       camelize: false,
       config: {
         dependencies: {
@@ -160,7 +160,7 @@ const commonTests = function(lazy) {
 
   it('camelizes plugins name by default', function() {
     const x = gulpLoadPlugins({
-      lazy: lazy,
+      lazy,
       config: {
         dependencies: {
           'gulp-foo-bar': '*'
@@ -175,7 +175,7 @@ const commonTests = function(lazy) {
 
   it('lets something be completely renamed', function() {
     const x = gulpLoadPlugins({
-      lazy: lazy,
+      lazy,
       config: { dependencies: { 'gulp-foo': '1.0.0' } },
       rename: { 'gulp-foo': 'bar' }
     });
@@ -187,7 +187,7 @@ const commonTests = function(lazy) {
     const restore = capture(process.stdout);
     try {
       const x = gulpLoadPlugins({
-        lazy: lazy,
+        lazy,
         DEBUG: true,
         config: { dependencies: { 'gulp-foo': '*' } }
       });
@@ -206,7 +206,7 @@ const commonTests = function(lazy) {
 
   it('supports loading scopped package as a nested reference', function() {
     const x = gulpLoadPlugins({
-      lazy: lazy,
+      lazy,
       config: { dependencies: { '@myco/gulp-test-plugin': '1.0.0' } }
     });
 
@@ -215,7 +215,7 @@ const commonTests = function(lazy) {
 
   it('supports loading scopped package as a top-level reference', function() {
     const x = gulpLoadPlugins({
-      lazy: lazy,
+      lazy,
       maintainScope: false,
       config: { dependencies: { '@myco/gulp-test-plugin': '1.0.0' } }
     });
@@ -246,7 +246,7 @@ const commonTests = function(lazy) {
 
   it('supports transforming', function() {
     const x = gulpLoadPlugins({
-      lazy: lazy,
+      lazy,
       config: { dependencies: { 'gulp-foo': '1.0.0' } },
       postRequireTransforms: {
         foo: function(foo) {

@@ -45,7 +45,7 @@ module.exports = function(options) {
 
   const DEBUG = options.DEBUG || false;
   const pattern = getPattern(options);
-  const config = options.config || findup('package.json', { cwd: parentDir });
+  const config = options.config || findup('package.json', { cwd: path.dirname(module.parent.filename) });
   const scope = arrayify(options.scope || ['dependencies', 'devDependencies', 'peerDependencies']);
   const replaceString = options.replaceString || /^gulp(-|\.)/;
   const camelizePluginName = options.camelize !== false;
@@ -166,8 +166,6 @@ module.exports = function(options) {
 
   return finalObject;
 };
-
-const parentDir = path.dirname(module.parent.filename);
 
 // Necessary to get the current `module.parent` and resolve paths correctly.
 delete require.cache[__filename];
