@@ -4,9 +4,6 @@
 
 > Loads gulp plugins from package dependencies and attaches them to an object of your choice.
 
-[![Build Status](https://travis-ci.org/jackfranklin/gulp-load-plugins.svg?branch=master)](https://travis-ci.org/jackfranklin/gulp-load-plugins)
-
-
 ## Node Version Requirements
 
 Due to the native support of ES2015 syntax in newer versions of Node, this plugin requires at least Node v8. If you need to maintain support for older versions of Node, version 1.6.0 of this plugin is the last release that will support Node versions less than 8.
